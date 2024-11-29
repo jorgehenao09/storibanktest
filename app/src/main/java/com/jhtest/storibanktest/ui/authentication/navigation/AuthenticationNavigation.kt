@@ -23,9 +23,8 @@ fun AuthenticationNavigation(
             SplashScreen { uiAction ->
                 if (uiAction is SplashNavAction.NavigateToLogin) {
                     navController.navigate(AuthenticationScreens.LoginScreen.name)
-                } else {
-                    onAction(uiAction)
                 }
+                onAction(uiAction)
             }
         }
 
