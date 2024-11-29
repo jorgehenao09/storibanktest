@@ -1,6 +1,30 @@
+import com.google.protobuf.gradle.id
+
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.protobuf.plugin)
+    alias(libs.plugins.kotlin.ksp)
+    id(
+        libs.plugins.kotlin.android
+            .get()
+            .pluginId
+    )
+    id(
+        libs.plugins.kotlin.kapt
+            .get()
+            .pluginId
+    )
+    id(
+        libs.plugins.safeargs
+            .get()
+            .pluginId
+    )
+    id(
+        libs.plugins.dagger.hilt
+            .get()
+            .pluginId
+    )
 }
 
 android {
@@ -49,21 +73,84 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
+protobuf {
+    protoc {
+        artifact = libs.protobuf.protoc
+            .get()
+            .toString()
+    }
+
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation(libs.core.splash.screen)
+    implementation(libs.activity.ktx)
+
+    // Navigation
+    implementation(libs.bundles.navigation)
+
+    // Lifecycle
+    implementation(libs.bundles.lifecycle)
+
+    // Coroutines
+    implementation(libs.coroutine)
+
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.okhttp.interceptor)
+
+    // Dagger-hilt
+    implementation(libs.bundles.hilt)
+    kapt(libs.hilt.android.compiler)
+
+    // Compose
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
+    implementation(libs.bundles.accompanist)
+
+    // Mockk
+    implementation(libs.mockk.android)
+    implementation(libs.mockk.agent)
+
+    // Shimmer
+    implementation(libs.shimmer)
+
+    // DataStore
+    implementation(libs.datastore.preferences)
+    implementation(libs.protobuf)
+
+
+    // Unit test
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
+    testImplementation(libs.truth)
+    testImplementation(libs.core.testing)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk.testing)
+    testImplementation(libs.coroutine.test)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter.params)
+    androidTestImplementation(libs.rules)
+    androidTestImplementation(libs.hilt.testing)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.mockk.android)
+    testRuntimeOnly(libs.junit.jupiter.engine)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
