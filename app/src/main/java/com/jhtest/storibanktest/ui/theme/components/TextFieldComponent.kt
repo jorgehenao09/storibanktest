@@ -218,7 +218,7 @@ fun TextFieldScreen(
                             currentTextState = text
                             textIsNotEmpty(
                                 text,
-                                validation = text.containsNoEmojis() && text.isValidLength(1, 15),
+                                validation = text.containsNoEmojis() && text.isValidLength(5, 15),
                                 onSuccess = {
                                     onTextChange.invoke(it to true)
                                     error = String.Empty
