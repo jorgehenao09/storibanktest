@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">StoriBank-T</string>
+
+    <string name="label_continue" translatable="false">Continuar</string>
+    <string name="label_sign_up" translatable="false">Registrarse</string>
+
+    <string name="authentication_error_textfield_email" translatable="false">Por favor, ingresa un email valido</string>
+    <string name="authentication_error_textfield_name" translatable="false">Por favor, ingresa un nombre valido</string>
+    <string name="authentication_error_textfield_password" translatable="false">Por favor, ingresa una contraseña valida</string>
+    <string name="authentication_error_textfield_last_name" translatable="false">Por favor, ingresa un apellido valido</string>
+    <string name="authentication_error_textfield_user_name" translatable="false">Por favor, ingresa un user name valido</string>
+    <string name="authentication_view_textfield_user_name" translatable="false">User Name</string>
+    <string name="authentication_view_textfield_name" translatable="false">Nombre</string>
+    <string name="authentication_view_textfield_password" translatable="false">Password</string>
+    <string name="authentication_view_textfield_last_name" translatable="false">Apellido</string>
+    <string name="authentication_view_login_description_text" translatable="false">Ingresa tu informacion para acceder:</string>
+    <string name="authentication_view_login_sign_up_description_text" translatable="false">¿No tienes una cuenta? puedes crear una aqui:</string>
 </resources>
