@@ -20,7 +20,6 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun StoriBankTTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
