@@ -3,7 +3,6 @@
 package com.jhtest.storibanktest.ui.theme.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -18,8 +17,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
@@ -30,6 +30,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,6 +38,8 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -50,23 +53,23 @@ import com.jhtest.storibanktest.utils.isEmailValid
 import com.jhtest.storibanktest.utils.isValidLength
 import io.mockk.core.ValueClassSupport.boxedValue
 
-enum class TextFieldCheckoutValidation {
+enum class TextFieldValidation {
     EMAIL,
     NAME,
+    USER_NAME,
     LAST_NAME,
+    PASSWORD,
     NONE
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFieldCheckoutScreen(
+fun TextFieldScreen(
     modifier: Modifier = Modifier,
     label: String = String.Empty,
     defaultValue: String = String.Empty,
     enabled: Boolean = true,
     readOnly: Boolean = false,
-    showEndIcon: Boolean = false,
-    validationType: TextFieldCheckoutValidation = TextFieldCheckoutValidation.NONE,
+    validationType: TextFieldValidation = TextFieldValidation.NONE,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onTextChange: (Pair<String, Boolean>) -> Unit,
     onClick: (() -> Unit)? = null
@@ -76,7 +79,7 @@ fun TextFieldCheckoutScreen(
     val interaction: MutableInteractionSource = remember { MutableInteractionSource() }
     var currentTextState by remember(key1 = defaultValue) { mutableStateOf(defaultValue) }
 
-    val textSize = if (isFocused) 14.sp else 16.sp
+    val textSize = if (isFocused) 12.sp else 16.sp
 
     val colors = getTextColors(enabled = enabled, readOnly = readOnly)
     val borderColor = getBorderColor(error)
@@ -84,8 +87,8 @@ fun TextFieldCheckoutScreen(
 
     val errorEmail = stringResource(id = R.string.authentication_error_textfield_email)
     val errorName = stringResource(id = R.string.authentication_error_textfield_name)
-    val errorAllFields =
-        stringResource(id = R.string.authentication_error_textfield_all_fields_completed)
+    val errorUserName = stringResource(id = R.string.authentication_error_textfield_user_name)
+    val errorPassword = stringResource(id = R.string.authentication_error_textfield_password)
     val errorLastName = stringResource(id = R.string.authentication_error_textfield_last_name)
 
     LaunchedEffect(key1 = true) {
@@ -134,6 +137,7 @@ fun TextFieldCheckoutScreen(
                 singleLine = true,
                 maxLines = 1,
                 textStyle = MaterialTheme.typography.labelMedium,
+                visualTransformation = if (validationType != TextFieldValidation.PASSWORD) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = keyboardOptions,
                 decorationBox = @Composable { innerTextField ->
                     TextDecorationBox(
@@ -148,7 +152,7 @@ fun TextFieldCheckoutScreen(
                 },
                 onValueChange = { text ->
                     when (validationType) {
-                        TextFieldCheckoutValidation.EMAIL -> {
+                        TextFieldValidation.EMAIL -> {
                             currentTextState = text
                             textIsNotEmpty(
                                 text,
@@ -164,7 +168,7 @@ fun TextFieldCheckoutScreen(
                             )
                         }
 
-                        TextFieldCheckoutValidation.NAME -> {
+                        TextFieldValidation.NAME -> {
                             currentTextState = text
                             textIsNotEmpty(
                                 text = text,
@@ -182,7 +186,25 @@ fun TextFieldCheckoutScreen(
                             )
                         }
 
-                        TextFieldCheckoutValidation.LAST_NAME -> {
+                        TextFieldValidation.USER_NAME -> {
+                            currentTextState = text
+                            textIsNotEmpty(
+                                text = text,
+                                validation = text.trim().isNotEmpty() &&
+                                        text.containsNoEmojis() &&
+                                        text.isValidLength(1, 15),
+                                onSuccess = {
+                                    onTextChange.invoke(it to true)
+                                    error = String.Empty
+                                },
+                                onError = {
+                                    onTextChange.invoke(String.Empty to false)
+                                    error = errorUserName
+                                }
+                            )
+                        }
+
+                        TextFieldValidation.LAST_NAME -> {
                             currentTextState = text
                             textIsNotEmpty(
                                 text,
@@ -198,17 +220,26 @@ fun TextFieldCheckoutScreen(
                             )
                         }
 
+                        TextFieldValidation.PASSWORD -> {
+                            currentTextState = text
+                            textIsNotEmpty(
+                                text,
+                                validation = text.containsNoEmojis() && text.isValidLength(1, 15),
+                                onSuccess = {
+                                    onTextChange.invoke(it to true)
+                                    error = String.Empty
+                                },
+                                onError = {
+                                    onTextChange.invoke(String.Empty to false)
+                                    error = errorPassword
+                                }
+                            )
+                        }
+
                         else -> Unit
                     }
                 }
             )
-            if (showEndIcon) {
-                Image(
-                    modifier = Modifier.align(Alignment.CenterEnd),
-                    imageVector = Icons.Rounded.KeyboardArrowDown,
-                    contentDescription = null
-                )
-            }
         }
         AnimatedVisibility(visible = error.isNotEmpty()) {
             TextErrorComponent(
@@ -280,19 +311,6 @@ private fun LabelItem(
 }
 
 @Composable
-private fun TextErrorComponent(
-    modifier: Modifier = Modifier,
-    messageError: String
-) {
-    Text(
-        modifier = modifier,
-        text = messageError,
-        style = MaterialTheme.typography.bodySmall,
-        fontWeight = FontWeight.Bold
-    )
-}
-
-@Composable
 private fun getTextColors(
     enabled: Boolean,
     readOnly: Boolean
@@ -325,12 +343,11 @@ private fun getBackgroundColor(
 @Preview
 @Composable
 fun EmailCheckoutPreview() {
-    TextFieldCheckoutScreen(
+    TextFieldScreen(
         modifier = Modifier.padding(horizontal = 24.dp),
         enabled = true,
         readOnly = false,
         label = "label",
-        showEndIcon = true,
         onTextChange = { }
     ) { }
 }
