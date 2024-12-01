@@ -31,7 +31,7 @@ class SplashViewModel @Inject constructor(
             loginShouldBeShowed()
         }.stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
+            SharingStarted.Eagerly,
             SplashState()
         )
 

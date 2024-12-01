@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.jhtest.storibanktest.ui.authentication.navigation.AuthenticationNavigation
+import com.jhtest.storibanktest.ui.authentication.navigation.models.LoginNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.SplashNavAction
 import com.jhtest.storibanktest.ui.theme.StoriBankTTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,18 +39,29 @@ class AuthenticationActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     AuthenticationNavigation { uiAction ->
-                        if (uiAction is SplashNavAction.NavigateToHome) {
-//                            startActivity<HomeActivity> {
-//                                flags =
-//                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                            }
-                            this@AuthenticationActivity.finish()
-                        }
+                        when(uiAction) {
+                            is SplashNavAction.NavigateToHome -> {
+                                keepSplashOpened = false
+                                launchHomeActivity()
+                            }
 
-                        keepSplashOpened = false
+                            is LoginNavAction.NavigateToHome -> {
+                                launchHomeActivity()
+                            }
+
+                            else -> {}
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun launchHomeActivity() {
+//        startActivity<HomeActivity> {
+//            flags =
+//                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        }
+        this@AuthenticationActivity.finish()
     }
 }

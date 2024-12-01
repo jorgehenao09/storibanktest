@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jhtest.storibanktest.ui.authentication.login.compose.LoginScreen
 import com.jhtest.storibanktest.ui.authentication.navigation.models.AuthenticationScreens
 import com.jhtest.storibanktest.ui.authentication.navigation.models.SplashNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.UiAction
@@ -29,7 +30,9 @@ fun AuthenticationNavigation(
         }
 
         composable(AuthenticationScreens.LoginScreen.name) {
-
+            LoginScreen { uiAction ->
+                onAction(uiAction)
+            }
         }
 
         composable(AuthenticationScreens.SignUpScreen.name) {

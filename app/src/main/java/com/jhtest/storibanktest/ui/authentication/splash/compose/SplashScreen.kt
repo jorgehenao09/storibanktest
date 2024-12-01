@@ -23,7 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
 private const val MILLIS_200 = 200L
-private const val MILLIS_3000 = 3000L
+private const val MILLIS_1000 = 1000L
 
 @Composable
 internal fun SplashScreen(
@@ -34,7 +34,7 @@ internal fun SplashScreen(
 
     splashState.isUserLogged?.let { value ->
         LaunchedEffect(value) {
-            delay(MILLIS_3000)
+            delay(MILLIS_1000)
             if (value) {
                 onAction(SplashNavAction.NavigateToHome)
             } else {
@@ -58,7 +58,7 @@ internal fun SplashScreen(
         if (SDK_INT <= TIRAMISU) {
             delay(MILLIS_200)
             showLogo = true
-            delay(MILLIS_3000)
+            delay(MILLIS_1000)
             showLogo = false
             delay(MILLIS_200)
         }
