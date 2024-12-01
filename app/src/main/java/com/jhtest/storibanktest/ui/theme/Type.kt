@@ -29,6 +29,20 @@ val Typography = Typography(
         lineHeight = 16.0.sp,
         letterSpacing = 0.4.sp,
     ),
+    labelMedium = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 16.0.sp,
+        letterSpacing = 0.4.sp,
+    ),
+    labelLarge = TextStyle(
+        fontFamily = Rubik,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 16.0.sp,
+        letterSpacing = 0.5.sp,
+    ),
     headlineMedium = TextStyle(
         fontFamily = Rubik,
         fontWeight = FontWeight.Normal,
