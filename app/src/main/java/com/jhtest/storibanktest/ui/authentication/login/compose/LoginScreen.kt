@@ -1,13 +1,12 @@
 package com.jhtest.storibanktest.ui.authentication.login.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -31,6 +30,12 @@ fun LoginScreen(
 ) {
     val loginUiState by loginViewModel.loginState.collectAsStateWithLifecycle()
     val isButtonEnabled = loginViewModel.isButtonEnabled
+
+    BackHandler {}
+
+    if (loginUiState.isSuccess) {
+        onAction(LoginNavAction.NavigateToHome)
+    }
 
     if (loginUiState.messageError.isNotEmpty()) {
         onAction(LoginNavAction.NavigateToErrorScreen)

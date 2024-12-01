@@ -5,8 +5,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.jhtest.storibanktest.ui.authentication.login.states.LoginUiState
 import com.jhtest.storibanktest.utils.Empty
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 data class LoginUserInfo(
@@ -18,6 +22,12 @@ data class LoginUserInfo(
 class LoginViewModel @Inject constructor(
 
 ) : ViewModel() {
+
+    private val _loginState: MutableStateFlow<LoginUiState> =
+        MutableStateFlow(LoginUiState())
+    val loginState: StateFlow<LoginUiState>
+        get() = _loginState.asStateFlow()
+
     private var userNameState by mutableStateOf(false)
     private var passwordState by mutableStateOf(false)
 
@@ -26,6 +36,10 @@ class LoginViewModel @Inject constructor(
     }
 
     private var loginUserInfo = LoginUserInfo()
+
+    fun onValidateCredentials() {
+
+    }
 
     fun setPassword(password: Pair<String, Boolean>) {
         loginUserInfo = loginUserInfo.copy(password = password.first)
