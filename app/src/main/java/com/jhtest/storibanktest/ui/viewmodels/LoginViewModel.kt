@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 data class LoginUserInfo(
-    val userName: String = String.Empty,
+    val email: String = String.Empty,
     val password: String = String.Empty,
 )
 
@@ -28,11 +28,11 @@ class LoginViewModel @Inject constructor(
     val loginState: StateFlow<LoginUiState>
         get() = _loginState.asStateFlow()
 
-    private var userNameState by mutableStateOf(false)
+    private var emailState by mutableStateOf(false)
     private var passwordState by mutableStateOf(false)
 
     val isButtonEnabled by derivedStateOf {
-        userNameState && passwordState
+        emailState && passwordState
     }
 
     private var loginUserInfo = LoginUserInfo()
@@ -41,17 +41,17 @@ class LoginViewModel @Inject constructor(
 
     }
 
+    fun setEmail(email: Pair<String, Boolean>) {
+        loginUserInfo = loginUserInfo.copy(email = email.first)
+        emailState = email.second
+    }
+
     fun setPassword(password: Pair<String, Boolean>) {
         loginUserInfo = loginUserInfo.copy(password = password.first)
         passwordState = password.second
     }
 
+    fun getEmail(): String = loginUserInfo.email
+
     fun getPassword(): String = loginUserInfo.password
-
-    fun setUserName(userName: Pair<String, Boolean>) {
-        loginUserInfo = loginUserInfo.copy(userName = userName.first)
-        userNameState = userName.second
-    }
-
-    fun getUserName(): String = loginUserInfo.userName
 }

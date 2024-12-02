@@ -9,6 +9,7 @@ import com.jhtest.storibanktest.ui.authentication.navigation.models.Authenticati
 import com.jhtest.storibanktest.ui.authentication.navigation.models.LoginNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.SplashNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.UiAction
+import com.jhtest.storibanktest.ui.authentication.signUp.compose.SignUpScreen
 import com.jhtest.storibanktest.ui.authentication.splash.compose.SplashScreen
 
 @Composable
@@ -49,7 +50,9 @@ fun AuthenticationNavigation(
         }
 
         composable(AuthenticationScreens.SignUpScreen.name) {
-
+            SignUpScreen {
+                onAction(it)
+            }
         }
 
         composable(AuthenticationScreens.FaceIdScreen.name) {

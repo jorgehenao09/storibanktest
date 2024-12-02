@@ -11,8 +11,12 @@
     <string name="authentication_error_textfield_user_name" translatable="false">Por favor, ingresa un user name valido</string>
     <string name="authentication_view_textfield_user_name" translatable="false">User Name</string>
     <string name="authentication_view_textfield_name" translatable="false">Nombre</string>
+    <string name="authentication_view_textfield_email" translatable="false">Email</string>
     <string name="authentication_view_textfield_password" translatable="false">Password</string>
     <string name="authentication_view_textfield_last_name" translatable="false">Apellido</string>
     <string name="authentication_view_login_description_text" translatable="false">Ingresa tu informacion para acceder:</string>
     <string name="authentication_view_login_sign_up_description_text" translatable="false">¿No tienes una cuenta? puedes crear una aqui:</string>
+
+    <string name="authentication_view_signup_header" translatable="false">Registro</string>
+    <string name="authentication_view_signup_description" translatable="false">Al llenar el formulario y continuar, aceptas nuestros terminos y condiciones</string>
 </resources>

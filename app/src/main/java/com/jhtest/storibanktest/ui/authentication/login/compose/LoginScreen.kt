@@ -24,7 +24,7 @@ import com.jhtest.storibanktest.ui.theme.components.PrimaryButton
 import com.jhtest.storibanktest.ui.viewmodels.LoginViewModel
 
 @Composable
-fun LoginScreen(
+internal fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
     onAction: (UiAction) -> Unit
 ) {
