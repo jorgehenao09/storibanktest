@@ -30,14 +30,14 @@ internal fun LoginForm(
 
         TextFieldScreen(
             modifier = Modifier.formModifier(),
-            label = stringResource(id = R.string.authentication_view_textfield_user_name),
-            defaultValue = loginViewModel.getUserName(),
-            validationType = TextFieldValidation.USER_NAME,
+            label = stringResource(id = R.string.authentication_view_textfield_email),
+            defaultValue = loginViewModel.getEmail(),
+            validationType = TextFieldValidation.EMAIL,
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text
+                keyboardType = KeyboardType.Email
             ),
             onTextChange = {
-                loginViewModel.setUserName(it)
+                loginViewModel.setEmail(it)
             }
         )
         TextFieldScreen(
