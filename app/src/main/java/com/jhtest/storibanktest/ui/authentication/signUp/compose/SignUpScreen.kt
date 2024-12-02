@@ -10,27 +10,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.jhtest.storibanktest.ui.authentication.navigation.models.UiAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SignUpNavAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.UiAction
+import com.jhtest.storibanktest.ui.theme.components.PrimaryButton
 import com.jhtest.storibanktest.ui.viewmodels.SignUpViewModel
 
 @Composable
 internal fun SignUpScreen(
-    signUpViewModel: SignUpViewModel = hiltViewModel(),
+    signUpViewModel: SignUpViewModel,
     onAction: (UiAction) -> Unit,
 ) {
+    val isButtonEnabled = signUpViewModel.isButtonEnabled
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
-        val (header, form) = createRefs()
+        val (header, form, continueBtn) = createRefs()
 
         SignUpHeader(
-            modifier = Modifier.constrainAs(header) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }.padding(top = 24.dp)
+            modifier = Modifier
+                .constrainAs(header) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .padding(top = 24.dp)
         )
 
         SignUpForm(
@@ -41,13 +47,26 @@ internal fun SignUpScreen(
                 end.linkTo(parent.end)
             }
         )
+
+        PrimaryButton(
+            modifier = Modifier.constrainAs(continueBtn) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom, 54.dp)
+            },
+            isButtonEnabled = isButtonEnabled
+        ) {
+            onAction(SignUpNavAction.NavigateToFaceId)
+        }
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 private fun SignUpScreen() {
-    SignUpScreen {
+    SignUpScreen(
+        signUpViewModel = hiltViewModel<SignUpViewModel>()
+    ) {
 
     }
 }

@@ -2,7 +2,7 @@ import com.google.protobuf.gradle.id
 
 plugins {
     alias(libs.plugins.android.application)
-    //alias(libs.plugins.google.services)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.protobuf.plugin)
     alias(libs.plugins.kotlin.ksp)
     id(
@@ -138,6 +138,8 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.protobuf)
 
+    //Firebase
+    implementation(libs.firebase.auth.ktx)
 
     // Unit test
     testImplementation(libs.junit)

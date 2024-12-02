@@ -18,8 +18,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jhtest.storibanktest.R
-import com.jhtest.storibanktest.ui.authentication.navigation.models.LoginNavAction
-import com.jhtest.storibanktest.ui.authentication.navigation.models.UiAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.LoginNavAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.UiAction
 import com.jhtest.storibanktest.ui.theme.components.PrimaryButton
 import com.jhtest.storibanktest.ui.viewmodels.LoginViewModel
 
@@ -29,7 +29,6 @@ internal fun LoginScreen(
     onAction: (UiAction) -> Unit
 ) {
     val loginUiState by loginViewModel.loginState.collectAsStateWithLifecycle()
-    val isButtonEnabled = loginViewModel.isButtonEnabled
 
     BackHandler {}
 
@@ -44,6 +43,21 @@ internal fun LoginScreen(
     AnimatedVisibility(loginUiState.isLoading) {
         LoginShimmer()
     }
+
+    AnimatedVisibility(loginUiState.isLoading.not()) {
+        LoginContent(loginViewModel) {
+            onAction(it)
+        }
+    }
+
+}
+
+@Composable
+private fun LoginContent(
+    loginViewModel: LoginViewModel,
+    onAction: (UiAction) -> Unit
+) {
+    val isButtonEnabled = loginViewModel.isButtonEnabled
 
     ConstraintLayout(
         modifier = Modifier
@@ -82,7 +96,7 @@ internal fun LoginScreen(
             },
             isButtonEnabled = isButtonEnabled
         ) {
-            loginViewModel.onValidateCredentials()
+            loginViewModel.onSignInUser()
         }
 
         SignUpInformation(

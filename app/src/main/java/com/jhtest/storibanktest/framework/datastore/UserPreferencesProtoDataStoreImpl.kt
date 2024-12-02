@@ -1,7 +1,8 @@
-package com.jhtest.storibanktest.data.datastore
+package com.jhtest.storibanktest.framework.datastore
 
 import androidx.datastore.core.DataStore
-import com.jhtest.storibanktest.data.repository.datasources.UserPreferencesProtoDataStore
+import com.jhtest.storibanktest.data.datastore.UserPreferencesProto
+import com.jhtest.storibanktest.data.datasources.UserPreferencesProtoDataStore
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
