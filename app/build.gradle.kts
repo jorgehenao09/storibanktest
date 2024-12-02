@@ -2,7 +2,7 @@ import com.google.protobuf.gradle.id
 
 plugins {
     alias(libs.plugins.android.application)
-    //alias(libs.plugins.google.services)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.protobuf.plugin)
     alias(libs.plugins.kotlin.ksp)
     id(
