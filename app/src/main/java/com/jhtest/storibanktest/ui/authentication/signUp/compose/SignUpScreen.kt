@@ -63,10 +63,8 @@ internal fun SignUpScreen(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun SignUpScreen() {
+private fun SignUpScreenPreview() {
     SignUpScreen(
         signUpViewModel = hiltViewModel<SignUpViewModel>()
-    ) {
-
-    }
+    ) { }
 }
