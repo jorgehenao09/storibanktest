@@ -103,9 +103,6 @@ hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-comp
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltCompose" }
 hilt-navigation-fragment = { group = "androidx.hilt", name = "hilt-navigation-fragment", version.ref = "hiltNavigationFragment" }
 
-com-google-dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
-com-google-dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
-
 #Data Store
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
 protobuf = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
@@ -126,11 +123,8 @@ firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx",
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-dagger-hilt = { id = "dagger.hilt.android.plugin"}
 android-library = { id = "com.android.library", version.ref = "androidLibrary" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-kotlin-kapt = { id = "kotlin-kapt" }
-safeargs = { id = "androidx.navigation.safeargs.kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 protobuf-plugin = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 
