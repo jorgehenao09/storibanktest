@@ -12,8 +12,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.jhtest.storibanktest.ui.authentication.navigation.AuthenticationNavigation
-import com.jhtest.storibanktest.ui.authentication.navigation.models.LoginNavAction
-import com.jhtest.storibanktest.ui.authentication.navigation.models.SplashNavAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.LoginNavAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SplashNavAction
 import com.jhtest.storibanktest.ui.theme.StoriBankTTheme
 import dagger.hilt.android.AndroidEntryPoint
 

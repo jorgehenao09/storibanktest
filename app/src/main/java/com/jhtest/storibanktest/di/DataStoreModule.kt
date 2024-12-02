@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.jhtest.storibanktest.data.datastore.USER_PREFERENCES
+import com.jhtest.storibanktest.framework.datastore.USER_PREFERENCES
 import com.jhtest.storibanktest.data.datastore.UserPreferencesProto
-import com.jhtest.storibanktest.data.datastore.UserPreferencesProtoDataStoreImpl
-import com.jhtest.storibanktest.data.datastore.UserPreferencesSerializer
-import com.jhtest.storibanktest.data.repository.datasources.UserPreferencesProtoDataStore
+import com.jhtest.storibanktest.framework.datastore.UserPreferencesProtoDataStoreImpl
+import com.jhtest.storibanktest.framework.datastore.UserPreferencesSerializer
+import com.jhtest.storibanktest.data.datasources.UserPreferencesProtoDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -138,6 +138,8 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.protobuf)
 
+    //Firebase
+    implementation(libs.firebase.auth.ktx)
 
     // Unit test
     testImplementation(libs.junit)

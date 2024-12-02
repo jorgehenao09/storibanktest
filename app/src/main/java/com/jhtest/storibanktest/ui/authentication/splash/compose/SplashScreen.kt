@@ -16,11 +16,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.jhtest.storibanktest.ui.authentication.navigation.models.SplashNavAction
-import com.jhtest.storibanktest.ui.authentication.navigation.models.UiAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SplashNavAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.UiAction
 import com.jhtest.storibanktest.ui.viewmodels.SplashViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 
 private const val MILLIS_200 = 200L
 private const val MILLIS_1000 = 1000L

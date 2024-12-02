@@ -1,4 +1,4 @@
-package com.jhtest.storibanktest.data.repository.datasources
+package com.jhtest.storibanktest.data.datasources
 
 import com.jhtest.storibanktest.data.datastore.UserPreferencesProto
 import kotlinx.coroutines.flow.Flow

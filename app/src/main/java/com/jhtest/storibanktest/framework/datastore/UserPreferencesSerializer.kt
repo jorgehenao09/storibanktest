@@ -1,8 +1,9 @@
-package com.jhtest.storibanktest.data.datastore
+package com.jhtest.storibanktest.framework.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
+import com.jhtest.storibanktest.data.datastore.UserPreferencesProto
 import java.io.InputStream
 import java.io.OutputStream
 

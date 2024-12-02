@@ -1,8 +1,12 @@
 package com.jhtest.storibanktest.di
 
-import com.jhtest.storibanktest.data.repository.SplashRepositoryImpl
-import com.jhtest.storibanktest.data.repository.datasources.UserPreferencesProtoDataStore
-import com.jhtest.storibanktest.domain.repository.SplashRepository
+import com.jhtest.storibanktest.data.datasources.FirebaseAuthDataSource
+import com.jhtest.storibanktest.data.repository.UserStorageRepositoryImpl
+import com.jhtest.storibanktest.data.datasources.UserPreferencesProtoDataStore
+import com.jhtest.storibanktest.data.repository.SignInRepositoryImpl
+import com.jhtest.storibanktest.domain.mapper.UserDataMapper
+import com.jhtest.storibanktest.domain.repository.SignInRepository
+import com.jhtest.storibanktest.domain.repository.UserStorageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +21,17 @@ class AuthenticationModule {
     @ViewModelScoped
     fun provideSplashRepository(
         userPreferencesProtoDataStore: UserPreferencesProtoDataStore
-    ): SplashRepository = SplashRepositoryImpl(
+    ): UserStorageRepository = UserStorageRepositoryImpl(
         userPreferencesProtoDataStore = userPreferencesProtoDataStore
     )
+
+    @Provides
+    @ViewModelScoped
+    fun provideLoginRepository(
+        firebaseAuthDataSource: FirebaseAuthDataSource
+    ): SignInRepository = SignInRepositoryImpl(firebaseAuthDataSource)
+
+    @Provides
+    @ViewModelScoped
+    fun provideUserDataMapper() = UserDataMapper()
 }

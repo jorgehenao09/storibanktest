@@ -1,4 +1,4 @@
-package com.jhtest.storibanktest.ui.authentication.navigation.models
+package com.jhtest.storibanktest.ui.authentication.navigation.models.actions
 
 sealed class LoginNavAction : UiAction {
     data object NavigateToHome : SplashNavAction()
