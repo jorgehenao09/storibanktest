@@ -19,4 +19,9 @@
 
     <string name="authentication_view_signup_header" translatable="false">Registro</string>
     <string name="authentication_view_signup_description" translatable="false">Al llenar el formulario y continuar, aceptas nuestros terminos y condiciones</string>
+
+    <string name="authentication_view_face_id_header" translatable="false">Face ID</string>
+    <string name="authentication_view_face_id_description" translatable="false">Para finalizar el proceso de registro, es necesario registrar tu Face ID</string>
+    <string name="authentication_view_face_id_finishing" translatable="false">¡Ya casi terminamos!</string>
+    <string name="authentication_view_face_id_take_photo" translatable="false">Tomar foto</string>
 </resources>

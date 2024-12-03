@@ -65,7 +65,9 @@ fun AuthenticationNavigation(
         }
 
         composable(AuthenticationScreens.FaceIdScreen.name) {
-            FaceIdScreen(signUpViewModel)
+            FaceIdScreen(signUpViewModel) { uiAction ->
+                onAction(uiAction)
+            }
         }
 
         composable(AuthenticationScreens.ErrorScreen.name) {

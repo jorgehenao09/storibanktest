@@ -17,17 +17,20 @@ data class SignUpUserInfo(
 )
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(
-
-) : ViewModel() {
+class SignUpViewModel @Inject constructor() : ViewModel() {
 
     private var nameState by mutableStateOf(false)
     private var lastNameState by mutableStateOf(false)
     private var emailState by mutableStateOf(false)
     private var passwordState by mutableStateOf(false)
+    private var faceIdState by mutableStateOf(true)
 
-    val isButtonEnabled by derivedStateOf {
+    val isContinueButtonEnabled by derivedStateOf {
         emailState && passwordState && nameState && lastNameState
+    }
+
+    val isSignUpButtonEnabled by derivedStateOf {
+        isContinueButtonEnabled && faceIdState
     }
 
     private var signUpUserInfo = SignUpUserInfo()
