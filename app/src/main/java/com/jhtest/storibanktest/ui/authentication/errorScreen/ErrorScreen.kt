@@ -95,7 +95,7 @@ fun ErrorScreen(
             }
         ) {
             PrimaryButton(
-                modifier = Modifier.padding(bottom = 48.dp),
+                modifier = Modifier.padding(bottom = 56.dp),
                 textValue = stringResource(R.string.label_back)
             ) {
                 onAction(ErrorNavAction.NavigateBack)
