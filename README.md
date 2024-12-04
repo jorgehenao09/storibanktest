@@ -13,6 +13,13 @@ Stori Test is a basic Android app where a user can authenticate or create and us
 
 ![image](https://github.com/user-attachments/assets/9c2c59b7-a684-41e2-bba0-3db88f2236eb)
 
+## Firebase Data
+|  | Firebase |
+| --- | --- |
+| Authentication | ![image](https://github.com/user-attachments/assets/80e7990a-707f-43eb-9e84-1074c20601bb) |
+| Firestore | ![image](https://github.com/user-attachments/assets/4ad172ae-563a-40a6-82df-e2be92676e17) |
+| Storage | ![image](https://github.com/user-attachments/assets/f6bcb998-0b12-4b91-ab9c-ad8afd84281e) |
+
 ## Screenshots
 
 |  | Login |
