@@ -17,16 +17,20 @@ Stori Test is a basic Android app where a user can authenticate or create and us
 ### Login
 Initial state form
 ![image](https://github.com/user-attachments/assets/b35cb497-adb9-4b90-992e-5dee4e42da2b)
+
 Filled state form
 ![image](https://github.com/user-attachments/assets/f2948be6-060a-4b83-a94e-71db3b8e8699)
+
 Empty state form
 ![image](https://github.com/user-attachments/assets/7a0f1267-1ddf-42ef-909e-c1cd0828bbdd)
 
 ### SignUp
 Initial state form
 ![image](https://github.com/user-attachments/assets/efdd42e2-a727-4f27-ac8f-ea7537685886)
+
 Filled state form
 ![image](https://github.com/user-attachments/assets/baff5ad6-fa03-41b2-bc35-83436172586c)
+
 Empty state form
 ![image](https://github.com/user-attachments/assets/a9e012a7-7893-475e-90e6-3fd558b3e6d0)
 
