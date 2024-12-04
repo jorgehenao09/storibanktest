@@ -5,16 +5,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jhtest.storibanktest.ui.authentication.errorScreen.ErrorScreen
 import com.jhtest.storibanktest.ui.authentication.faceId.compose.FaceIdScreen
 import com.jhtest.storibanktest.ui.authentication.login.compose.LoginScreen
 import com.jhtest.storibanktest.ui.authentication.navigation.models.AuthenticationScreens
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.ErrorNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.FaceIdNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.LoginNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SignUpNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SplashNavAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SuccessNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.UiAction
 import com.jhtest.storibanktest.ui.authentication.signUp.compose.SignUpScreen
 import com.jhtest.storibanktest.ui.authentication.splash.compose.SplashScreen
+import com.jhtest.storibanktest.ui.authentication.successScreen.SuccessScreen
 import com.jhtest.storibanktest.ui.viewmodels.SignUpViewModel
 
 @Composable
@@ -81,11 +85,19 @@ fun AuthenticationNavigation(
         }
 
         composable(AuthenticationScreens.ErrorScreen.name) {
-
+            ErrorScreen { uiAction ->
+                if (uiAction is ErrorNavAction.NavigateBack) {
+                    navController.popBackStack()
+                }
+            }
         }
 
         composable(AuthenticationScreens.SuccessScreen.name) {
-
+            SuccessScreen { uiAction ->
+                if (uiAction is SuccessNavAction.NavigateToHome) {
+                    onAction(uiAction)
+                }
+            }
         }
     }
 }

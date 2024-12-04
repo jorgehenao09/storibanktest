@@ -14,6 +14,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.jhtest.storibanktest.ui.authentication.navigation.AuthenticationNavigation
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.LoginNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SplashNavAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SuccessNavAction
+import com.jhtest.storibanktest.ui.home.HomeActivity
 import com.jhtest.storibanktest.ui.theme.StoriBankTTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,8 +41,8 @@ class AuthenticationActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     AuthenticationNavigation { uiAction ->
-                        when(uiAction) {
-                            is SplashNavAction.NavigateToHome, LoginNavAction.NavigateToHome -> {
+                        when (uiAction) {
+                            is SplashNavAction.NavigateToHome, LoginNavAction.NavigateToHome, SuccessNavAction.NavigateToHome -> {
                                 keepSplashOpened = false
                                 launchHomeActivity()
                             }
@@ -54,10 +56,7 @@ class AuthenticationActivity : ComponentActivity() {
     }
 
     private fun launchHomeActivity() {
-//        startActivity<HomeActivity> {
-//            flags =
-//                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        }
+        startActivity(HomeActivity.newIntent(from = this))
         this@AuthenticationActivity.finish()
     }
 }

@@ -19,7 +19,7 @@ import com.jhtest.storibanktest.ui.theme.components.utils.Shapes
 @Composable
 fun PrimaryButton(
     modifier: Modifier = Modifier,
-    isButtonEnabled: Boolean,
+    isButtonEnabled: Boolean = true,
     textValue: String = stringResource(id = R.string.label_continue),
     buttonColor: Color = MaterialTheme.colorScheme.primary,
     disabledButtonColor: Color? = null,

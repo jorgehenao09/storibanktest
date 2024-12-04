@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -18,6 +19,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jhtest.storibanktest.R
+import com.jhtest.storibanktest.ui.authentication.login.states.LoginUiState
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.LoginNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.UiAction
 import com.jhtest.storibanktest.ui.theme.components.PrimaryButton
@@ -28,16 +30,22 @@ internal fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
     onAction: (UiAction) -> Unit
 ) {
-    val loginUiState by loginViewModel.loginState.collectAsStateWithLifecycle()
+    val loginUiState by loginViewModel.loginState.collectAsStateWithLifecycle(
+        LoginUiState()
+    )
 
     BackHandler {}
 
-    if (loginUiState.isSuccess) {
-        onAction(LoginNavAction.NavigateToHome)
+    LaunchedEffect(loginUiState.isSuccess) {
+        if (loginUiState.isSuccess) {
+            onAction(LoginNavAction.NavigateToHome)
+        }
     }
 
-    if (loginUiState.messageError.isNotEmpty()) {
-        onAction(LoginNavAction.NavigateToErrorScreen)
+    LaunchedEffect(loginUiState.messageError) {
+        if (loginUiState.messageError.isNotEmpty()) {
+            onAction(LoginNavAction.NavigateToErrorScreen)
+        }
     }
 
     AnimatedVisibility(loginUiState.isLoading) {
