@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.jhtest.storibanktest.R
 
 @Composable
-fun FaceIdHeader(modifier: Modifier = Modifier) {
+internal fun FaceIdHeader(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()

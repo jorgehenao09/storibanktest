@@ -1,5 +1,13 @@
 package com.jhtest.storibanktest.ui.authentication.faceId.compose
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -7,11 +15,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.jhtest.storibanktest.R
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.FaceIdNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.UiAction
 import com.jhtest.storibanktest.ui.theme.components.PrimaryButton
 import com.jhtest.storibanktest.ui.viewmodels.SignUpViewModel
@@ -21,6 +34,27 @@ fun FaceIdScreen(
     signUpViewModel: SignUpViewModel,
     onAction: (UiAction) -> Unit
 ) {
+    val signUpState by signUpViewModel.signUpState.collectAsStateWithLifecycle()
+
+    if (signUpState.isLoading) {
+        FaceIdShimmer()
+    }
+
+    if (signUpState.isLoading.not()) {
+        FaceIdContent(signUpViewModel)
+    }
+
+    if (signUpState.isSuccess) {
+        onAction(FaceIdNavAction.NavigateToSuccessScreen)
+    }
+
+    if (signUpState.messageError.isNotEmpty()) {
+        onAction(FaceIdNavAction.NavigateToErrorScreen)
+    }
+}
+
+@Composable
+fun FaceIdContent(signUpViewModel: SignUpViewModel) {
     val isSignUpButtonEnabled = signUpViewModel.isSignUpButtonEnabled
 
     ConstraintLayout(
@@ -49,7 +83,12 @@ fun FaceIdScreen(
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
                 }
-                .padding(start = 16.dp, end = 16.dp)
+                .padding(start = 16.dp, end = 16.dp),
+            onImageCaptured = { uri ->
+                uri.let {
+                    signUpViewModel.setFaceId(it.toString() to true)
+                }
+            }
         )
 
         PrimaryButton(
@@ -59,12 +98,12 @@ fun FaceIdScreen(
                 end.linkTo(parent.end)
             },
             isButtonEnabled = isSignUpButtonEnabled,
-            textValue = "Finalizar",
+            textValue = stringResource(R.string.label_finish),
             buttonColor = MaterialTheme.colorScheme.background,
             disabledButtonColor = MaterialTheme.colorScheme.primaryContainer,
             textColor = MaterialTheme.colorScheme.primary,
             onButtonClicked = {
-
+                signUpViewModel.onSignUp()
             }
         )
     }

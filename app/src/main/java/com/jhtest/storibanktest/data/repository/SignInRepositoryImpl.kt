@@ -12,9 +12,9 @@ class SignInRepositoryImpl @Inject constructor(
     private val firebaseAuthDataSource: FirebaseAuthDataSource
 ) : SignInRepository {
 
-    override suspend fun loginUser(email: String, password: String): Flow<Result<FirebaseUser>> =
+    override suspend fun signInUser(email: String, password: String): Flow<Result<FirebaseUser>> =
         flow {
-            val userData = firebaseAuthDataSource.loginUser(email, password)
+            val userData = firebaseAuthDataSource.signInUser(email, password)
             emit(Result.success(userData))
         }.catch {
             emit(Result.failure(it))

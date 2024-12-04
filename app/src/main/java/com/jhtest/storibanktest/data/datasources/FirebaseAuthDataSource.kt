@@ -4,5 +4,9 @@ import com.google.firebase.auth.FirebaseUser
 
 interface FirebaseAuthDataSource {
 
-    suspend fun loginUser(email: String, password: String): FirebaseUser
+    suspend fun signInUser(email: String, password: String): FirebaseUser
+
+    suspend fun signUpUser(
+        email: String,
+        password: String): FirebaseUser
 }

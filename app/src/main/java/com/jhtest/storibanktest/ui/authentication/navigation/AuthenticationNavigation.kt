@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.jhtest.storibanktest.ui.authentication.faceId.compose.FaceIdScreen
 import com.jhtest.storibanktest.ui.authentication.login.compose.LoginScreen
 import com.jhtest.storibanktest.ui.authentication.navigation.models.AuthenticationScreens
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.FaceIdNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.LoginNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SignUpNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SplashNavAction
@@ -66,7 +67,16 @@ fun AuthenticationNavigation(
 
         composable(AuthenticationScreens.FaceIdScreen.name) {
             FaceIdScreen(signUpViewModel) { uiAction ->
-                onAction(uiAction)
+                when (uiAction) {
+                    is FaceIdNavAction.NavigateToSuccessScreen -> {
+                        navController.navigate(AuthenticationScreens.SuccessScreen.name)
+                    }
+                    is FaceIdNavAction.NavigateToErrorScreen -> {
+                        navController.navigate(AuthenticationScreens.ErrorScreen.name)
+                    }
+
+                    else -> onAction(uiAction)
+                }
             }
         }
 

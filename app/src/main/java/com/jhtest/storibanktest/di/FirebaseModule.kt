@@ -1,8 +1,11 @@
 package com.jhtest.storibanktest.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jhtest.storibanktest.data.datasources.FirebaseAuthDataSource
+import com.jhtest.storibanktest.data.datasources.FirebaseFirestoreDataSource
 import com.jhtest.storibanktest.framework.firebase.FirebaseAuthDataSourceImpl
+import com.jhtest.storibanktest.framework.firebase.FirebaseFirestoreDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +22,17 @@ object FirebaseModule {
 
     @Provides
     @Singleton
+    fun provideFirebaseFirestore(): FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    @Provides
+    @Singleton
     fun provideFirebaseAuthDataSource(
         firebaseAuth: FirebaseAuth
     ): FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFirestoreDataSource(
+        firebaseFirestore: FirebaseFirestore
+    ): FirebaseFirestoreDataSource = FirebaseFirestoreDataSourceImpl(firebaseFirestore)
 }

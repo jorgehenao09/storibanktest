@@ -13,8 +13,9 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
 ) : FirebaseAuthDataSource {
 
     private val loginException = Exception("Error al iniciar sesión")
+    private val signUpException = Exception("Error al crear el usuario")
 
-    override suspend fun loginUser(email: String, password: String): FirebaseUser =
+    override suspend fun signInUser(email: String, password: String): FirebaseUser =
         suspendCoroutine { continuation ->
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
@@ -31,4 +32,23 @@ class FirebaseAuthDataSourceImpl @Inject constructor(
                     }
                 }
         }
+
+    override suspend fun signUpUser(
+        email: String,
+        password: String
+    ): FirebaseUser = suspendCoroutine { continuation ->
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = firebaseAuth.currentUser
+                    user?.let {
+                        continuation.resume(it)
+                    } ?: run {
+                        continuation.resumeWithException(signUpException)
+                    }
+                } else {
+                    continuation.resumeWithException(loginException)
+                }
+            }
+    }
 }
