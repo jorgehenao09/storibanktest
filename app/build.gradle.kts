@@ -126,6 +126,9 @@ dependencies {
     implementation(libs.camerax.two)
     implementation(libs.google.guava)
 
+    // Coil
+    implementation(libs.coil.compose)
+
     // Dagger-hilt
     implementation(libs.bundles.hilt)
     implementation(libs.firebase.firestore.ktx)

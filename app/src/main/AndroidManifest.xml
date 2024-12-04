@@ -24,7 +24,9 @@
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
             android:exported="true"
-            android:theme="@style/Theme.StoriBankT" >
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.StoriBankT"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

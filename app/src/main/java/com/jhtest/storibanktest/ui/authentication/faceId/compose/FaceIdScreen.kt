@@ -1,13 +1,5 @@
 package com.jhtest.storibanktest.ui.authentication.faceId.compose
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import android.provider.MediaStore
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -54,7 +46,7 @@ fun FaceIdScreen(
 }
 
 @Composable
-fun FaceIdContent(signUpViewModel: SignUpViewModel) {
+private fun FaceIdContent(signUpViewModel: SignUpViewModel) {
     val isSignUpButtonEnabled = signUpViewModel.isSignUpButtonEnabled
 
     ConstraintLayout(

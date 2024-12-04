@@ -15,16 +15,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -48,9 +45,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import coil.compose.rememberAsyncImagePainter
 import com.jhtest.storibanktest.R
 import com.jhtest.storibanktest.ui.theme.components.SecondaryButton
-import java.io.File
+import com.jhtest.storibanktest.utils.createFile
 
 @Composable
 internal fun FaceIdPhoto(
@@ -58,9 +56,17 @@ internal fun FaceIdPhoto(
     onImageCaptured: (Uri) -> Unit
 ) {
     var permissionGranted by rememberSaveable { mutableStateOf(false) }
-    val context = LocalContext.current
+    var imageCapture: ImageCapture? by remember { mutableStateOf(null) }
+    var capturedUri by remember { mutableStateOf<Uri?>(null) }
     val cameraPermissionErrorMessage =
         stringResource(R.string.authentication_view_face_id_permission_denied)
+
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
+    val cameraController = remember { LifecycleCameraController(context) }
+    cameraController.bindToLifecycle(lifecycleOwner)
 
     val cameraPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -72,17 +78,7 @@ internal fun FaceIdPhoto(
         }
     }
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
-    var imageCapture: ImageCapture? by remember { mutableStateOf(null) }
-
-    val cameraController = remember { LifecycleCameraController(context) }
-    cameraController.bindToLifecycle(lifecycleOwner)
-
-    val file = File(
-        context.externalMediaDirs.firstOrNull(),
-        "${System.currentTimeMillis()}.jpg"
-    )
+    val file = context.createFile()
     val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
 
     ElevatedCard(
@@ -103,7 +99,9 @@ internal fun FaceIdPhoto(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = stringResource(R.string.authentication_view_face_id_finishing),
+                text = if (capturedUri == null) stringResource(R.string.authentication_view_face_id_finishing) else stringResource(
+                    R.string.authentication_view_face_id_process_complete
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
@@ -112,48 +110,60 @@ internal fun FaceIdPhoto(
                 color = MaterialTheme.colorScheme.primary
             )
 
-            if (permissionGranted) {
-                AndroidView(
-                    modifier = Modifier
-                        .size(175.dp)
-                        .align(Alignment.CenterHorizontally),
-                    factory = {
-                        val previewView = PreviewView(context).apply {
-                            layoutParams = ViewGroup.LayoutParams(200, 200)
+            if (capturedUri == null) {
+                if (permissionGranted) {
+                    AndroidView(
+                        modifier = Modifier
+                            .size(175.dp)
+                            .align(Alignment.CenterHorizontally),
+                        factory = {
+                            val previewView = PreviewView(context).apply {
+                                layoutParams = ViewGroup.LayoutParams(200, 200)
 
+                            }
+                            cameraProviderFuture.addListener(
+                                {
+                                    val cameraProvider = cameraProviderFuture.get()
+                                    val preview = Preview.Builder().build().also {
+                                        it.surfaceProvider = previewView.surfaceProvider
+                                    }
+
+                                    imageCapture = ImageCapture.Builder().build()
+                                    try {
+                                        cameraProvider.unbindAll()
+                                        cameraProvider.bindToLifecycle(
+                                            lifecycleOwner,
+                                            CameraSelector.DEFAULT_BACK_CAMERA,
+                                            preview,
+                                            imageCapture
+                                        )
+                                    } catch (_: Exception) {
+                                    }
+                                }, ContextCompat.getMainExecutor(context)
+                            )
+                            previewView
                         }
-                        cameraProviderFuture.addListener({
-                            val cameraProvider = cameraProviderFuture.get()
-                            val preview = Preview.Builder().build().also {
-                                it.surfaceProvider = previewView.surfaceProvider
-                            }
-
-                            imageCapture = ImageCapture.Builder().build()
-                            try {
-                                cameraProvider.unbindAll()
-                                cameraProvider.bindToLifecycle(
-                                    lifecycleOwner,
-                                    CameraSelector.DEFAULT_BACK_CAMERA,
-                                    preview,
-                                    imageCapture
-                                )
-                            } catch (e: Exception) {
-                            }
-                        }, ContextCompat.getMainExecutor(context))
-
-                        previewView
-                    }
-                )
+                    )
+                } else {
+                    Image(
+                        modifier = Modifier
+                            .size(200.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .padding(vertical = 24.dp),
+                        painter = painterResource(id = R.drawable.ic_face_id),
+                        colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary),
+                        contentScale = ContentScale.Fit,
+                        contentDescription = "faceId"
+                    )
+                }
             } else {
                 Image(
                     modifier = Modifier
-                        .size(200.dp)
+                        .size(270.dp)
                         .align(Alignment.CenterHorizontally)
                         .padding(vertical = 24.dp),
-                    painter = painterResource(id = R.drawable.ic_face_id),
-                    colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = "faceId"
+                    painter = rememberAsyncImagePainter(capturedUri),
+                    contentDescription = "Captured Image",
                 )
             }
 
@@ -161,6 +171,7 @@ internal fun FaceIdPhoto(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                isButtonEnabled = capturedUri == null,
                 textValue = if (permissionGranted.not()) stringResource(R.string.authentication_view_face_id_open_camera) else stringResource(
                     R.string.authentication_view_face_id_take_photo
                 ),
@@ -173,7 +184,9 @@ internal fun FaceIdPhoto(
                         ContextCompat.getMainExecutor(context),
                         object : ImageCapture.OnImageSavedCallback {
                             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                                onImageCaptured(Uri.fromFile(file))
+                                val uri = Uri.fromFile(file)
+                                capturedUri = uri
+                                onImageCaptured(uri)
                             }
 
                             override fun onError(exception: ImageCaptureException) {
