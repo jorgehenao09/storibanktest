@@ -68,7 +68,9 @@ class LoginViewModel @Inject constructor(
                 }
             )
         }.onStart {
-            _loginState.emit(LoginUiState(isLoading = true))
+            _loginState.update { state ->
+                state.copy(isLoading = true)
+            }
         }.flowOn(ioDispatcher).launchIn(viewModelScope)
     }
 

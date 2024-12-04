@@ -118,8 +118,22 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.okhttp.interceptor)
 
+    // CameraX
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.view)
+    implementation(libs.camerax.extensions)
+    implementation(libs.camerax.two)
+    implementation(libs.google.guava)
+
+    // Coil
+    implementation(libs.coil.compose)
+
     // Dagger-hilt
     implementation(libs.bundles.hilt)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.compose.ui.tooling)
     kapt(libs.hilt.android.compiler)
 
     // Compose
@@ -140,6 +154,8 @@ dependencies {
 
     //Firebase
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
 
     // Unit test
     testImplementation(libs.junit)

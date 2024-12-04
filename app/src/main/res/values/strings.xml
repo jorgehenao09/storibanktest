@@ -3,6 +3,7 @@
 
     <string name="label_continue" translatable="false">Continuar</string>
     <string name="label_sign_up" translatable="false">Registrarse</string>
+    <string name="label_finish" translatable="false">Finalizar</string>
 
     <string name="authentication_error_textfield_email" translatable="false">Por favor, ingresa un email valido</string>
     <string name="authentication_error_textfield_name" translatable="false">Por favor, ingresa un nombre valido</string>
@@ -19,4 +20,12 @@
 
     <string name="authentication_view_signup_header" translatable="false">Registro</string>
     <string name="authentication_view_signup_description" translatable="false">Al llenar el formulario y continuar, aceptas nuestros terminos y condiciones</string>
+
+    <string name="authentication_view_face_id_header" translatable="false">Face ID</string>
+    <string name="authentication_view_face_id_description" translatable="false">Para finalizar el proceso de registro, es necesario registrar tu Face ID</string>
+    <string name="authentication_view_face_id_finishing" translatable="false">¡Ya casi terminamos!</string>
+    <string name="authentication_view_face_id_process_complete" translatable="false">¡Has completado todos los pasos!</string>
+    <string name="authentication_view_face_id_take_photo" translatable="false">Tomar foto</string>
+    <string name="authentication_view_face_id_open_camera" translatable="false">Abrir cámara</string>
+    <string name="authentication_view_face_id_permission_denied" translatable="false">Debes habilitar los permisos de la camara para continuar</string>
 </resources>

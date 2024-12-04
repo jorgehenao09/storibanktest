@@ -20,7 +20,7 @@ internal fun SignUpScreen(
     signUpViewModel: SignUpViewModel,
     onAction: (UiAction) -> Unit,
 ) {
-    val isButtonEnabled = signUpViewModel.isButtonEnabled
+    val isButtonEnabled = signUpViewModel.isContinueButtonEnabled
 
     ConstraintLayout(
         modifier = Modifier

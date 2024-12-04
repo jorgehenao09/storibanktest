@@ -19,10 +19,17 @@ class UserStorageRepositoryImpl @Inject constructor(
         emit(Result.failure(it))
     }
 
-    override suspend fun saveUserData(email: String, name: String) {
+    override suspend fun saveUserData(
+        userId: String,
+        name: String,
+        lastName: String,
+        email: String
+    ) {
         userPreferencesProtoDataStore.saveUserData(
             UserPreferencesProto.newBuilder()
                 .setUserLogged(true)
+                .setCustomerId(userId)
+                .setLastName(lastName)
                 .setEmail(email)
                 .setFirstName(name)
                 .build()

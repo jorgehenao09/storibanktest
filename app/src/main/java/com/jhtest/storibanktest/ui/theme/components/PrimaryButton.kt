@@ -21,6 +21,9 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     isButtonEnabled: Boolean,
     textValue: String = stringResource(id = R.string.label_continue),
+    buttonColor: Color = MaterialTheme.colorScheme.primary,
+    disabledButtonColor: Color? = null,
+    textColor: Color = Color.White,
     onButtonClicked: () -> Unit
 ) {
     Button(
@@ -29,14 +32,16 @@ fun PrimaryButton(
             .padding(start = 24.dp, end = 24.dp)
             .height(48.dp),
         shape = Shapes.medium,
-        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (isButtonEnabled) buttonColor else MaterialTheme.colorScheme.primaryContainer,
+            disabledContainerColor = disabledButtonColor.takeIf { it != null } ?: Color.Unspecified),
         enabled = isButtonEnabled,
         onClick = onButtonClicked
     ) {
         Text(
             text = textValue,
             style = MaterialTheme.typography.labelLarge,
-            color = if (isButtonEnabled) Color.White else MaterialTheme.colorScheme.primaryContainer,
+            color = if (isButtonEnabled) textColor else MaterialTheme.colorScheme.secondaryContainer,
         )
     }
 }
@@ -45,7 +50,7 @@ fun PrimaryButton(
 @Composable
 private fun PrimaryButtonPreview() {
     PrimaryButton(
-        isButtonEnabled = true,
+        isButtonEnabled = false,
         onButtonClicked = {}
     )
 }
