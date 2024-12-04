@@ -8,5 +8,5 @@ interface UserCloudStorageRepository {
 
     suspend fun saveUserData(signUpUserInfo: SignUpUserInfo)
 
-    suspend fun getUserData(userId: String): Flow<Result<UserData>>
+    fun getUserData(userId: String): Flow<Result<UserData>>
 }

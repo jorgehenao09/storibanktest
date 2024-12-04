@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -47,8 +48,9 @@ class LoginViewModelTest {
         }
 
         viewModel.onSignInUser()
+        advanceUntilIdle()
 
-        assertEquals(3, states.size)
+        assertEquals(2, states.size)
         assertEquals(LoginUiState(isLoading = true), states[0])
         assertEquals(LoginUiState(isLoading = false, isSuccess = true), states[1])
 
@@ -73,8 +75,9 @@ class LoginViewModelTest {
         }
 
         viewModel.onSignInUser()
+        advanceUntilIdle()
 
-        assertEquals(3, states.size)
+        assertEquals(2, states.size)
         assertEquals(LoginUiState(isLoading = true), states[0])
         assertEquals(
             LoginUiState(isLoading = false, messageError = errorMessage),

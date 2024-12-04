@@ -12,7 +12,7 @@ class UserStorageRepositoryImpl @Inject constructor(
     private val userPreferencesProtoDataStore: UserPreferencesProtoDataStore
 ) : UserStorageRepository {
 
-    override suspend fun isUserLogged() = flow {
+    override fun isUserLogged() = flow {
         val isUserLogged = userPreferencesProtoDataStore.userDataProto.first().userLogged
         emit(Result.success(isUserLogged))
     }.catch {

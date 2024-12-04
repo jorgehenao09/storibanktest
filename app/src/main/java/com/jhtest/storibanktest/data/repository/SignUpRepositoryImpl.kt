@@ -12,7 +12,7 @@ class SignUpRepositoryImpl @Inject constructor(
     private val firebaseAuthDataSource: FirebaseAuthDataSource
 ) : SignUpRepository {
 
-    override suspend fun signUpUser(
+    override fun signUpUser(
         email: String,
         password: String
     ): Flow<Result<FirebaseUser>> = flow {

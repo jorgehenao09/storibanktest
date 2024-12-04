@@ -19,7 +19,7 @@ class UserCloudStorageRepositoryImpl @Inject constructor(
         firebaseFirestoreDataSource.saveUserData(signUpUserInfo)
     }
 
-    override suspend fun getUserData(userId: String): Flow<Result<UserData>> = flow {
+    override fun getUserData(userId: String): Flow<Result<UserData>> = flow {
         val userData = firebaseFirestoreDataSource.getUserData(userId)
         emit(Result.success(userData))
     }.catch {
