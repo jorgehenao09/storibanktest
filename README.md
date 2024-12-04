@@ -35,6 +35,10 @@ Stori Test is a basic Android app where a user can authenticate or create and us
 | Photo taken and form filled | ![Captura de pantalla 2024-12-03 a la(s) 11 08 26 p m](https://github.com/user-attachments/assets/70a004a3-93d2-45a0-91b5-84c9d7249dca) |
 | Loading proces | ![Captura de pantalla 2024-12-03 a la(s) 11 08 39 p m](https://github.com/user-attachments/assets/f6c638c0-722b-451c-898a-45ce34f4aa00) |
 
+|  | ErrorScreen |
+| --- | --- |
+| Initial state | ![Captura de pantalla 2024-12-04 a la(s) 8 14 11 a m](https://github.com/user-attachments/assets/a69938c6-ef45-4b9c-9736-aaefa7485b8f) |
+
 ## Tools used
 
 * Jetpack compose
