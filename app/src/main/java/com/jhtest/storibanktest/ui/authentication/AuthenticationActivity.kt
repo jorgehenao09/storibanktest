@@ -1,6 +1,5 @@
 package com.jhtest.storibanktest.ui.authentication
 
-import android.content.Intent
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.TIRAMISU
 import android.os.Bundle

@@ -27,7 +27,6 @@ import com.jhtest.storibanktest.R
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.ErrorNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.UiAction
 import com.jhtest.storibanktest.ui.theme.components.PrimaryButton
-import com.jhtest.storibanktest.ui.theme.components.SecondaryButton
 import kotlinx.coroutines.delay
 
 private const val MILLIS_100 = 100L
