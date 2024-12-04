@@ -28,4 +28,7 @@
     <string name="authentication_view_face_id_take_photo" translatable="false">Tomar foto</string>
     <string name="authentication_view_face_id_open_camera" translatable="false">Abrir cámara</string>
     <string name="authentication_view_face_id_permission_denied" translatable="false">Debes habilitar los permisos de la camara para continuar</string>
+
+    <string name="authentication_view_success_title" translatable="false">¡Proceso de registro exitoso!</string>
+    <string name="authentication_view_success_welcome" translatable="false">BIENVENIDO</string>
 </resources>

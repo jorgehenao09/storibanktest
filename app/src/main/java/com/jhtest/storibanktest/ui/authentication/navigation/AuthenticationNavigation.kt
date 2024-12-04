@@ -12,9 +12,11 @@ import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.Face
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.LoginNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SignUpNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SplashNavAction
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SuccessNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.UiAction
 import com.jhtest.storibanktest.ui.authentication.signUp.compose.SignUpScreen
 import com.jhtest.storibanktest.ui.authentication.splash.compose.SplashScreen
+import com.jhtest.storibanktest.ui.authentication.successScreen.SuccessScreen
 import com.jhtest.storibanktest.ui.viewmodels.SignUpViewModel
 
 @Composable
@@ -85,7 +87,11 @@ fun AuthenticationNavigation(
         }
 
         composable(AuthenticationScreens.SuccessScreen.name) {
-
+            SuccessScreen { uiAction ->
+                if (uiAction is SuccessNavAction.NavigateToHome) {
+                    onAction(uiAction)
+                }
+            }
         }
     }
 }

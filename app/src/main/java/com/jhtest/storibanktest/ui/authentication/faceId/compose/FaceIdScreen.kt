@@ -7,6 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,12 +37,16 @@ fun FaceIdScreen(
         FaceIdContent(signUpViewModel)
     }
 
-    if (signUpState.isSuccess) {
-        onAction(FaceIdNavAction.NavigateToSuccessScreen)
+    LaunchedEffect(signUpState.isSuccess) {
+        if (signUpState.isSuccess) {
+            onAction(FaceIdNavAction.NavigateToSuccessScreen)
+        }
     }
 
-    if (signUpState.messageError.isNotEmpty()) {
-        onAction(FaceIdNavAction.NavigateToErrorScreen)
+    LaunchedEffect(signUpState.messageError) {
+        if (signUpState.messageError.isNotEmpty()) {
+            onAction(FaceIdNavAction.NavigateToErrorScreen)
+        }
     }
 }
 

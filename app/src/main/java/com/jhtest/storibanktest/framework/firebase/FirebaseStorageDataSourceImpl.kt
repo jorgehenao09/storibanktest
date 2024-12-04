@@ -33,15 +33,20 @@ class FirebaseStorageDataSourceImpl @Inject constructor(
             firebaseFirestore.collection(USER_COLLECTION).document(signUpUserInfo.userId)
                 .set(userMap)
                 .addOnSuccessListener {
-                    continuation.resume(Unit)
+                    val storageRef = firebaseStorage.reference
+                    val profileImageRef =
+                        storageRef.child("profileImages/${signUpUserInfo.userId}.jpg")
+                    profileImageRef.putFile(signUpUserInfo.faceId!!)
+                        .addOnSuccessListener {
+                            continuation.resume(Unit)
+                        }
+                        .addOnFailureListener { e ->
+                            continuation.resumeWithException(userStorageException)
+                        }
                 }
                 .addOnFailureListener { e ->
                     continuation.resumeWithException(userStorageException)
                 }
-
-            val storageRef = firebaseStorage.reference
-            val profileImageRef = storageRef.child("profileImages/${signUpUserInfo.userId}.jpg")
-            profileImageRef.putFile(signUpUserInfo.faceId!!)
         }
     }
 
