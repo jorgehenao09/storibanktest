@@ -1,7 +1,5 @@
 package com.jhtest.storibanktest.ui.authentication.successScreen
 
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.TIRAMISU
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image

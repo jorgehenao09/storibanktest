@@ -5,9 +5,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jhtest.storibanktest.ui.authentication.errorScreen.ErrorScreen
 import com.jhtest.storibanktest.ui.authentication.faceId.compose.FaceIdScreen
 import com.jhtest.storibanktest.ui.authentication.login.compose.LoginScreen
 import com.jhtest.storibanktest.ui.authentication.navigation.models.AuthenticationScreens
+import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.ErrorNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.FaceIdNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.LoginNavAction
 import com.jhtest.storibanktest.ui.authentication.navigation.models.actions.SignUpNavAction
@@ -83,7 +85,11 @@ fun AuthenticationNavigation(
         }
 
         composable(AuthenticationScreens.ErrorScreen.name) {
-
+            ErrorScreen { uiAction ->
+                if (uiAction is ErrorNavAction.NavigateBack) {
+                    navController.popBackStack()
+                }
+            }
         }
 
         composable(AuthenticationScreens.SuccessScreen.name) {

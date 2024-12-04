@@ -31,12 +31,14 @@ internal fun FaceIdShimmer(
 
         Column(
             modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 48.dp)
+                .padding(horizontal = 24.dp)
                 .constrainAs(header) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }.fillMaxWidth()
-                .padding(top = 48.dp)
+                }
         ) {
             Spacer(
                 modifier = Modifier
@@ -78,7 +80,8 @@ internal fun FaceIdShimmer(
                     end.linkTo(parent.end, 24.dp)
                 }
                 .fillMaxWidth()
-                .height(64.dp)
+                .height(56.dp)
+                .padding(horizontal = 24.dp)
                 .background(Color.Transparent, Shapes.medium)
                 .shimmerEffect(radius = 8.dp)
         )

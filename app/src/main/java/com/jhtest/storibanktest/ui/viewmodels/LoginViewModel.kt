@@ -12,8 +12,11 @@ import com.jhtest.storibanktest.ui.authentication.login.states.LoginUiState
 import com.jhtest.storibanktest.utils.Empty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -33,10 +36,10 @@ class LoginViewModel @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _loginState: MutableStateFlow<LoginUiState> =
-        MutableStateFlow(LoginUiState())
-    val loginState: StateFlow<LoginUiState>
-        get() = _loginState.asStateFlow()
+    private val _loginState: MutableSharedFlow<LoginUiState> =
+        MutableSharedFlow()
+    val loginState: SharedFlow<LoginUiState>
+        get() = _loginState.asSharedFlow()
 
     private var emailState by mutableStateOf(false)
     private var passwordState by mutableStateOf(false)
@@ -51,26 +54,32 @@ class LoginViewModel @Inject constructor(
         signInUserUC.invoke(loginUserInfo.email, loginUserInfo.password).map {
             it.fold(
                 onSuccess = { _ ->
-                    _loginState.update { state ->
-                        state.copy(
+                    _loginState.emit(
+                        LoginUiState(
                             isLoading = false,
-                            isSuccess = true
+                            isSuccess = true,
+                            messageError = String.Empty
                         )
-                    }
+                    )
                 },
                 onFailure = { exception ->
-                    _loginState.update { state ->
-                        state.copy(
+                    _loginState.emit(
+                        LoginUiState(
+                            isSuccess = false,
                             isLoading = false,
                             messageError = exception.message ?: String.Empty
                         )
-                    }
+                    )
                 }
             )
         }.onStart {
-            _loginState.update { state ->
-                state.copy(isLoading = true)
-            }
+            _loginState.emit(
+                LoginUiState(
+                    isSuccess = false,
+                    isLoading = true,
+                    messageError = String.Empty
+                )
+            )
         }.flowOn(ioDispatcher).launchIn(viewModelScope)
     }
 
