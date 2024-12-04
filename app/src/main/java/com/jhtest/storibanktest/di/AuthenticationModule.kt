@@ -1,7 +1,7 @@
 package com.jhtest.storibanktest.di
 
 import com.jhtest.storibanktest.data.datasources.FirebaseAuthDataSource
-import com.jhtest.storibanktest.data.datasources.FirebaseFirestoreDataSource
+import com.jhtest.storibanktest.data.datasources.FirebaseStorageDataSource
 import com.jhtest.storibanktest.data.repository.UserStorageRepositoryImpl
 import com.jhtest.storibanktest.data.datasources.UserPreferencesProtoDataStore
 import com.jhtest.storibanktest.data.repository.SignInRepositoryImpl
@@ -45,7 +45,7 @@ class AuthenticationModule {
     @Provides
     @ViewModelScoped
     fun provideUserCloudStorageRepository(
-        firebaseFirestoreDataSource: FirebaseFirestoreDataSource
+        firebaseFirestoreDataSource: FirebaseStorageDataSource
     ): UserCloudStorageRepository = UserCloudStorageRepositoryImpl(firebaseFirestoreDataSource)
 
     @Provides

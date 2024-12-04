@@ -131,7 +131,6 @@ dependencies {
 
     // Dagger-hilt
     implementation(libs.bundles.hilt)
-    implementation(libs.firebase.firestore.ktx)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.compose.ui.tooling)
@@ -155,6 +154,8 @@ dependencies {
 
     //Firebase
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
 
     // Unit test
     testImplementation(libs.junit)

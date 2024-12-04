@@ -77,9 +77,7 @@ private fun FaceIdContent(signUpViewModel: SignUpViewModel) {
                 }
                 .padding(start = 16.dp, end = 16.dp),
             onImageCaptured = { uri ->
-                uri.let {
-                    signUpViewModel.setFaceId(it.toString() to true)
-                }
+                signUpViewModel.setFaceId(uri to true)
             }
         )
 

@@ -43,6 +43,7 @@ firebaseFirestoreKtx = "25.1.1"
 camerax = "1.4.0"
 guava = "33.0.0-android"
 coil = "2.7.0"
+firebaseStorageKtx = "21.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -134,6 +135,7 @@ mockk-agent = { group = "io.mockk", name = "mockk-agent-android", version.ref = 
 shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

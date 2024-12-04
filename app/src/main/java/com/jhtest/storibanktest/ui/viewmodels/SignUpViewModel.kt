@@ -1,5 +1,6 @@
 package com.jhtest.storibanktest.ui.viewmodels
 
+import android.net.Uri
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,11 +24,12 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class SignUpUserInfo(
+    val userId: String = String.Empty,
     val name: String = String.Empty,
     val lastName: String = String.Empty,
     val email: String = String.Empty,
     val password: String = String.Empty,
-    val faceId: String = String.Empty,
+    val faceId: Uri? = null,
 )
 
 @HiltViewModel
@@ -58,13 +60,7 @@ class SignUpViewModel @Inject constructor(
     private var signUpUserInfo = SignUpUserInfo()
 
     fun onSignUp() {
-        signUpUC.invoke(
-            signUpUserInfo.name,
-            signUpUserInfo.lastName,
-            signUpUserInfo.email,
-            signUpUserInfo.password,
-            signUpUserInfo.faceId
-        ).map { result ->
+        signUpUC.invoke(signUpUserInfo).map { result ->
             result.fold(
                 onSuccess = {
                     _signUpState.update { state ->
@@ -109,7 +105,7 @@ class SignUpViewModel @Inject constructor(
         passwordState = password.second
     }
 
-    fun setFaceId(faceId: Pair<String, Boolean>) {
+    fun setFaceId(faceId: Pair<Uri, Boolean>) {
         signUpUserInfo = signUpUserInfo.copy(faceId = faceId.first)
         faceIdState = faceId.second
     }

@@ -1,8 +1,10 @@
 package com.jhtest.storibanktest.framework.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jhtest.storibanktest.data.datasources.FirebaseFirestoreDataSource
+import com.google.firebase.storage.FirebaseStorage
+import com.jhtest.storibanktest.data.datasources.FirebaseStorageDataSource
 import com.jhtest.storibanktest.data.models.UserData
+import com.jhtest.storibanktest.ui.viewmodels.SignUpUserInfo
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -10,34 +12,36 @@ import kotlin.coroutines.suspendCoroutine
 
 private const val USER_COLLECTION = "users"
 
-class FirebaseFirestoreDataSourceImpl @Inject constructor(
-    private val firebaseFirestore: FirebaseFirestore
-) : FirebaseFirestoreDataSource {
+class FirebaseStorageDataSourceImpl @Inject constructor(
+    private val firebaseFirestore: FirebaseFirestore,
+    private val firebaseStorage: FirebaseStorage
+) : FirebaseStorageDataSource {
     private val userStorageException = Exception("Error al guardar el usuario")
     private val userDataException = Exception("Error al obtener el usuario")
 
     override suspend fun saveUserData(
-        userId: String,
-        name: String,
-        lastName: String,
-        email: String,
-        faceId: String
+        signUpUserInfo: SignUpUserInfo
     ) {
         suspendCoroutine { continuation ->
             val userMap = hashMapOf(
-                "name" to name,
-                "lastName" to lastName,
-                "email" to email,
-                "faceId" to faceId
+                "name" to signUpUserInfo.name,
+                "lastName" to signUpUserInfo.lastName,
+                "email" to signUpUserInfo.email,
+                "faceId" to signUpUserInfo.faceId.toString()
             )
 
-            firebaseFirestore.collection(USER_COLLECTION).document(userId).set(userMap)
+            firebaseFirestore.collection(USER_COLLECTION).document(signUpUserInfo.userId)
+                .set(userMap)
                 .addOnSuccessListener {
                     continuation.resume(Unit)
                 }
                 .addOnFailureListener { e ->
                     continuation.resumeWithException(userStorageException)
                 }
+
+            val storageRef = firebaseStorage.reference
+            val profileImageRef = storageRef.child("profileImages/${signUpUserInfo.userId}.jpg")
+            profileImageRef.putFile(signUpUserInfo.faceId!!)
         }
     }
 
