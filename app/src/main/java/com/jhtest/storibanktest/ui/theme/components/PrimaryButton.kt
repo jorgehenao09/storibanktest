@@ -27,21 +27,18 @@ fun PrimaryButton(
     onButtonClicked: () -> Unit,
 ) {
     Button(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(start = 24.dp, end = 24.dp)
             .height(48.dp),
         shape = Shapes.medium,
-        colors =
-        ButtonDefaults.buttonColors(
+        colors = ButtonDefaults.buttonColors(
             containerColor = if (isButtonEnabled) {
                 buttonColor
             } else {
                 MaterialTheme.colorScheme.primaryContainer
             },
-            disabledContainerColor = disabledButtonColor.takeIf { it != null }
-                ?: Color.Unspecified,
+            disabledContainerColor = disabledButtonColor.takeIf { it != null } ?: Color.Unspecified,
         ),
         enabled = isButtonEnabled,
         onClick = onButtonClicked,
