@@ -93,40 +93,40 @@ fun TextFieldScreen(
 
     Column(
         modifier =
-        modifier
-            .clickableNoRipple {
-                onClick?.invoke()
-            },
+            modifier
+                .clickableNoRipple {
+                    onClick?.invoke()
+                },
     ) {
         Box(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .border(
-                    width = 1.dp,
-                    color = borderColor,
-                    shape = RoundedCornerShape(size = 12.dp),
-                )
-                .background(color = backgroundColor, shape = RoundedCornerShape(size = 12.dp))
-                .padding(horizontal = 16.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .border(
+                        width = 1.dp,
+                        color = borderColor,
+                        shape = RoundedCornerShape(size = 12.dp),
+                    )
+                    .background(color = backgroundColor, shape = RoundedCornerShape(size = 12.dp))
+                    .padding(horizontal = 16.dp),
             contentAlignment = Alignment.CenterStart,
         ) {
             BasicTextField(
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .indicatorLine(
-                        enabled = true,
-                        isError = false,
-                        interactionSource = interaction,
-                        colors = colors,
-                    )
-                    .onFocusChanged {
-                        if (it.isFocused) {
-                            onClick?.invoke()
-                        }
-                    },
+                    Modifier
+                        .fillMaxWidth()
+                        .indicatorLine(
+                            enabled = true,
+                            isError = false,
+                            interactionSource = interaction,
+                            colors = colors,
+                        )
+                        .onFocusChanged {
+                            if (it.isFocused) {
+                                onClick?.invoke()
+                            }
+                        },
                 value = currentTextState,
                 interactionSource = interaction,
                 enabled = enabled,
@@ -135,8 +135,11 @@ fun TextFieldScreen(
                 maxLines = 1,
                 textStyle = MaterialTheme.typography.labelMedium,
                 visualTransformation =
-                if (validationType != TextFieldValidation.PASSWORD) VisualTransformation.None
-                else PasswordVisualTransformation(),
+                    if (validationType != TextFieldValidation.PASSWORD) {
+                        VisualTransformation.None
+                    } else {
+                        PasswordVisualTransformation()
+                    },
                 keyboardOptions = keyboardOptions,
                 decorationBox = @Composable { innerTextField ->
                     TextDecorationBox(
@@ -172,9 +175,9 @@ fun TextFieldScreen(
                             textIsNotEmpty(
                                 text = text,
                                 validation =
-                                text.trim().isNotEmpty() &&
-                                    text.containsNoEmojis() &&
-                                    text.isValidLength(1, 20),
+                                    text.trim().isNotEmpty() &&
+                                        text.containsNoEmojis() &&
+                                        text.isValidLength(1, 20),
                                 onSuccess = {
                                     onTextChange.invoke(it to true)
                                     error = String.Empty
@@ -191,9 +194,9 @@ fun TextFieldScreen(
                             textIsNotEmpty(
                                 text = text,
                                 validation =
-                                text.trim().isNotEmpty() &&
-                                    text.containsNoEmojis() &&
-                                    text.isValidLength(1, 15),
+                                    text.trim().isNotEmpty() &&
+                                        text.containsNoEmojis() &&
+                                        text.isValidLength(1, 15),
                                 onSuccess = {
                                     onTextChange.invoke(it to true)
                                     error = String.Empty
@@ -256,8 +259,11 @@ private fun emailValidations(text: String) =
 
 @Composable
 private fun getBorderColor(error: String) =
-    if (error.isNotEmpty()) MaterialTheme.colorScheme.tertiary
-    else MaterialTheme.colorScheme.tertiaryContainer
+    if (error.isNotEmpty()) {
+        MaterialTheme.colorScheme.tertiary
+    } else {
+        MaterialTheme.colorScheme.tertiaryContainer
+    }
 
 private fun textIsNotEmpty(
     text: String,
