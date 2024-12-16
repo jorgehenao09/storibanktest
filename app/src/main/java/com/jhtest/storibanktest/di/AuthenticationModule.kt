@@ -7,7 +7,7 @@ import com.jhtest.storibanktest.data.datasources.UserPreferencesProtoDataStore
 import com.jhtest.storibanktest.data.repository.SignInRepositoryImpl
 import com.jhtest.storibanktest.data.repository.SignUpRepositoryImpl
 import com.jhtest.storibanktest.data.repository.UserCloudStorageRepositoryImpl
-import com.jhtest.storibanktest.domain.mapper.UserDataMapper
+import com.jhtest.storibanktest.data.mapper.UserDataMapper
 import com.jhtest.storibanktest.domain.repository.SignInRepository
 import com.jhtest.storibanktest.domain.repository.SignUpRepository
 import com.jhtest.storibanktest.domain.repository.UserCloudStorageRepository

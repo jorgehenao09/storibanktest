@@ -25,4 +25,11 @@ class UserCloudStorageRepositoryImpl @Inject constructor(
     }.catch {
         emit(Result.failure(it))
     }
+
+    override fun getUserTransactions(userId: String) = flow {
+        val bankTransaction = firebaseFirestoreDataSource.getUserTransactions(userId)
+        emit(Result.success(bankTransaction))
+    }.catch {
+        emit(Result.failure(it))
+    }
 }

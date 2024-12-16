@@ -1,4 +1,4 @@
-package com.jhtest.storibanktest.domain.mapper
+package com.jhtest.storibanktest.data.mapper
 
 import com.jhtest.storibanktest.data.models.UserData
 import com.jhtest.storibanktest.domain.models.UserDataModel
