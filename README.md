@@ -17,6 +17,10 @@ To see a user with transactions please use the user: pepito@mail.com pass: 12345
 
 ![image](https://github.com/user-attachments/assets/9c2c59b7-a684-41e2-bba0-3db88f2236eb)
 
+## Continuous Integration
+
+![image](https://github.com/user-attachments/assets/c0f9d98c-722e-4d6b-89e9-83024ae53251)
+
 ## Firebase Data
 |  | Firebase |
 | --- | --- |
