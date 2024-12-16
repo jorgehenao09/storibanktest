@@ -4,6 +4,7 @@ buildscript {
         classpath(libs.hilt.gradle)
         classpath(libs.safeargs.gradle)
         classpath(libs.google.services.gradle)
+        classpath(libs.ktlint.gradle)
     }
     repositories {
         google()

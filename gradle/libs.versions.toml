@@ -44,6 +44,7 @@ camerax = "1.4.0"
 guava = "33.0.0-android"
 coil = "2.7.0"
 firebaseStorageKtx = "21.0.1"
+ktlint = "12.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -77,6 +78,7 @@ junit-jupiter-params = { group = "org.junit.jupiter", name = "junit-jupiter-para
 safeargs-gradle = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "safeargsPlugin" }
 hilt-gradle = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hiltPlugin"}
 google-services-gradle = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
+ktlint-gradle = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlint" }
 
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
@@ -145,6 +147,7 @@ android-library = { id = "com.android.library", version.ref = "androidLibrary" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-kapt = { id = "kotlin-kapt" }
 safeargs = { id = "androidx.navigation.safeargs.kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 protobuf-plugin = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 

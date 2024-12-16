@@ -25,6 +25,11 @@ plugins {
             .get()
             .pluginId
     )
+    id(
+        libs.plugins.ktlint
+            .get()
+            .pluginId
+    )
 }
 
 android {
