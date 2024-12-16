@@ -53,7 +53,7 @@ import com.jhtest.storibanktest.utils.createFile
 @Composable
 internal fun FaceIdPhoto(
     modifier: Modifier = Modifier,
-    onImageCaptured: (Uri) -> Unit
+    onImageCaptured: (Uri) -> Unit,
 ) {
     var permissionGranted by rememberSaveable { mutableStateOf(false) }
     var imageCapture: ImageCapture? by remember { mutableStateOf(null) }
@@ -68,65 +68,77 @@ internal fun FaceIdPhoto(
     val cameraController = remember { LifecycleCameraController(context) }
     cameraController.bindToLifecycle(lifecycleOwner)
 
-    val cameraPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            permissionGranted = true
-        } else {
-            showPermissionError(context, cameraPermissionErrorMessage)
+    val cameraPermissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission(),
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                permissionGranted = true
+            } else {
+                showPermissionError(context, cameraPermissionErrorMessage)
+            }
         }
-    }
 
     val file = context.createFile()
     val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
 
     ElevatedCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(400.dp)
-            .padding(16.dp),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
-        ),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(400.dp)
+                .padding(16.dp),
+        elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = 4.dp,
+            ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background,
-        )
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.background,
+            ),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = if (capturedUri == null) stringResource(R.string.authentication_view_face_id_finishing) else stringResource(
-                    R.string.authentication_view_face_id_process_complete
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                text =
+                    if (capturedUri == null) {
+                        stringResource(R.string.authentication_view_face_id_finishing)
+                    } else {
+                        stringResource(
+                            R.string.authentication_view_face_id_process_complete,
+                        )
+                    },
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
 
             if (capturedUri == null) {
                 if (permissionGranted) {
                     AndroidView(
-                        modifier = Modifier
-                            .size(175.dp)
-                            .align(Alignment.CenterHorizontally),
+                        modifier =
+                            Modifier
+                                .size(175.dp)
+                                .align(Alignment.CenterHorizontally),
                         factory = {
-                            val previewView = PreviewView(context).apply {
-                                layoutParams = ViewGroup.LayoutParams(200, 200)
-
-                            }
+                            val previewView =
+                                PreviewView(context).apply {
+                                    layoutParams = ViewGroup.LayoutParams(200, 200)
+                                }
                             cameraProviderFuture.addListener(
                                 {
                                     val cameraProvider = cameraProviderFuture.get()
-                                    val preview = Preview.Builder().build().also {
-                                        it.surfaceProvider = previewView.surfaceProvider
-                                    }
+                                    val preview =
+                                        Preview.Builder().build().also {
+                                            it.surfaceProvider = previewView.surfaceProvider
+                                        }
 
                                     imageCapture = ImageCapture.Builder().build()
                                     try {
@@ -135,46 +147,55 @@ internal fun FaceIdPhoto(
                                             lifecycleOwner,
                                             CameraSelector.DEFAULT_BACK_CAMERA,
                                             preview,
-                                            imageCapture
+                                            imageCapture,
                                         )
                                     } catch (_: Exception) {
                                     }
-                                }, ContextCompat.getMainExecutor(context)
+                                },
+                                ContextCompat.getMainExecutor(context),
                             )
                             previewView
-                        }
+                        },
                     )
                 } else {
                     Image(
-                        modifier = Modifier
-                            .size(200.dp)
-                            .align(Alignment.CenterHorizontally)
-                            .padding(vertical = 24.dp),
+                        modifier =
+                            Modifier
+                                .size(200.dp)
+                                .align(Alignment.CenterHorizontally)
+                                .padding(vertical = 24.dp),
                         painter = painterResource(id = R.drawable.ic_face_id),
                         colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary),
                         contentScale = ContentScale.Fit,
-                        contentDescription = "faceId"
+                        contentDescription = "faceId",
                     )
                 }
             } else {
                 Image(
-                    modifier = Modifier
-                        .size(270.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 24.dp),
+                    modifier =
+                        Modifier
+                            .size(270.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .padding(vertical = 24.dp),
                     painter = rememberAsyncImagePainter(capturedUri),
                     contentDescription = "Captured Image",
                 )
             }
 
             SecondaryButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
                 isButtonEnabled = capturedUri == null,
-                textValue = if (permissionGranted.not()) stringResource(R.string.authentication_view_face_id_open_camera) else stringResource(
-                    R.string.authentication_view_face_id_take_photo
-                ),
+                textValue =
+                    if (permissionGranted.not()) {
+                        stringResource(R.string.authentication_view_face_id_open_camera)
+                    } else {
+                        stringResource(
+                            R.string.authentication_view_face_id_take_photo,
+                        )
+                    },
             ) {
                 if (permissionGranted.not()) {
                     cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
@@ -192,7 +213,7 @@ internal fun FaceIdPhoto(
                             override fun onError(exception: ImageCaptureException) {
                                 onError(exception)
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -200,6 +221,9 @@ internal fun FaceIdPhoto(
     }
 }
 
-private fun showPermissionError(context: Context, cameraPermissionErrorMessage: String) {
+private fun showPermissionError(
+    context: Context,
+    cameraPermissionErrorMessage: String,
+) {
     Toast.makeText(context, cameraPermissionErrorMessage, Toast.LENGTH_SHORT).show()
 }

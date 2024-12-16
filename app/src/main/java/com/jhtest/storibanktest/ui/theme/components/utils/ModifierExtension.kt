@@ -30,13 +30,13 @@ fun Modifier.clickableNoRipple(onClickItem: () -> Unit) =
             Modifier.clickable(
                 indication = null,
                 interactionSource =
-                remember {
-                    MutableInteractionSource()
-                }
+                    remember {
+                        MutableInteractionSource()
+                    },
             ) {
                 onClickItem()
             }
-        }
+        },
     )
 
 fun Modifier.formModifier() =
@@ -49,7 +49,7 @@ fun Modifier.shimmerEffect(
     topEnd: Dp = 0.dp,
     bottomEnd: Dp = 0.dp,
     bottomStart: Dp = 0.dp,
-    radius: Dp = 0.dp
+    radius: Dp = 0.dp,
 ): Modifier =
     composed {
         var size by remember {
@@ -60,10 +60,10 @@ fun Modifier.shimmerEffect(
             initialValue = -2 * size.width.toFloat(),
             targetValue = 2 * size.width.toFloat(),
             animationSpec =
-            infiniteRepeatable(
-                animation = tween(700)
-            ),
-            label = ""
+                infiniteRepeatable(
+                    animation = tween(700),
+                ),
+            label = "",
         )
         val cornerRadius =
             if (radius.value != 0f) {
@@ -73,23 +73,23 @@ fun Modifier.shimmerEffect(
                     topStart = topStart,
                     topEnd = topEnd,
                     bottomEnd = bottomEnd,
-                    bottomStart = bottomStart
+                    bottomStart = bottomStart,
                 )
             }
 
         background(
             shape = cornerRadius,
             brush =
-            Brush.linearGradient(
-                colors =
-                listOf(
-                    ShimmerColorBg,
-                    ShimmerColor,
-                    ShimmerColorBg
+                Brush.linearGradient(
+                    colors =
+                        listOf(
+                            ShimmerColorBg,
+                            ShimmerColor,
+                            ShimmerColorBg,
+                        ),
+                    start = Offset(startOffsetX, 0f),
+                    end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat()),
                 ),
-                start = Offset(startOffsetX, 0f),
-                end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
-            )
         ).onGloballyPositioned {
             size = it.size
         }

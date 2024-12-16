@@ -8,27 +8,27 @@ plugins {
     id(
         libs.plugins.kotlin.android
             .get()
-            .pluginId
+            .pluginId,
     )
     id(
         libs.plugins.kotlin.kapt
             .get()
-            .pluginId
+            .pluginId,
     )
     id(
         libs.plugins.safeargs
             .get()
-            .pluginId
+            .pluginId,
     )
     id(
         libs.plugins.dagger.hilt
             .get()
-            .pluginId
+            .pluginId,
     )
     id(
         libs.plugins.ktlint
             .get()
-            .pluginId
+            .pluginId,
     )
 }
 
@@ -54,7 +54,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -86,9 +86,10 @@ kapt {
 
 protobuf {
     protoc {
-        artifact = libs.protobuf.protoc
-            .get()
-            .toString()
+        artifact =
+            libs.protobuf.protoc
+                .get()
+                .toString()
     }
 
     generateProtoTasks {
@@ -157,7 +158,7 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.protobuf)
 
-    //Firebase
+    // Firebase
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.storage.ktx)

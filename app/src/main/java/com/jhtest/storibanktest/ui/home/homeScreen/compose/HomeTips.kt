@@ -19,40 +19,42 @@ import androidx.compose.ui.unit.dp
 import com.jhtest.storibanktest.R
 
 @Composable
-internal fun HomeTips(
-    modifier: Modifier = Modifier
-) {
+internal fun HomeTips(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val tips = getTips(context)
 
     ElevatedCard(
-        modifier = modifier
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
-        ),
+        modifier =
+            modifier
+                .fillMaxWidth(),
+        elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = 4.dp,
+            ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-        )
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+            ),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
         ) {
             Text(
                 text = stringResource(R.string.home_view_how_to_handle_your_account),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
-                color = Color.White
+                color = Color.White,
             )
             tips.forEach { tip ->
                 Text(
                     text = "\u2022 $tip",
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(vertical = 4.dp),
-                    color = Color.White
+                    color = Color.White,
                 )
             }
         }
@@ -63,6 +65,6 @@ private fun getTips(context: Context): List<String> {
     return listOf(
         context.getString(R.string.home_view_tip_positive_value),
         context.getString(R.string.home_view_tip_avoid_unrecognizable_transfers),
-        context.getString(R.string.home_view_tip_check_movements)
+        context.getString(R.string.home_view_tip_check_movements),
     )
 }

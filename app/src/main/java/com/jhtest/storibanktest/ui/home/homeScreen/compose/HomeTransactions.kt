@@ -18,19 +18,20 @@ import com.jhtest.storibanktest.domain.models.BankTransactionListModel
 @Composable
 fun HomeTransactions(
     modifier: Modifier = Modifier,
-    userTransactions: BankTransactionListModel
+    userTransactions: BankTransactionListModel,
 ) {
     Column(modifier = modifier) {
         Text(
             modifier = Modifier.padding(vertical = 16.dp),
             text = stringResource(R.string.home_view_transactions_title),
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
         )
 
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
         ) {
             items(userTransactions.transactions!!) { transaction ->
                 BankTransactionItem(transaction = transaction)

@@ -5,5 +5,5 @@ import com.jhtest.storibanktest.utils.Empty
 data class LoginUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
-    val messageError: String = String.Empty
+    val messageError: String = String.Empty,
 )

@@ -17,11 +17,12 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class LoginViewModelTest {
-
     private lateinit var viewModel: LoginViewModel
     private val signInUserUC: SignInUserUC = mockk()
 
@@ -32,60 +33,64 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `onSignInUser should update loginState with success when signInUserUC succeeds`() = runTest {
-        val email = "test@example.com"
-        val password = "password123"
-        val successResult = Result.success(Unit)
+    fun `onSignInUser should update loginState with success when signInUserUC succeeds`() =
+        runTest {
+            val email = "test@example.com"
+            val password = "password123"
+            val successResult = Result.success(Unit)
 
-        coEvery { signInUserUC.invoke(email, password) } returns flow { emit(successResult) }
+            coEvery { signInUserUC.invoke(email, password) } returns flow { emit(successResult) }
 
-        viewModel.setEmail(email to true)
-        viewModel.setPassword(password to true)
+            viewModel.setEmail(email to true)
+            viewModel.setPassword(password to true)
 
-        val states = mutableListOf<LoginUiState>()
-        val job = launch {
-            viewModel.loginState.toList(states)
+            val states = mutableListOf<LoginUiState>()
+            val job =
+                launch {
+                    viewModel.loginState.toList(states)
+                }
+
+            viewModel.onSignInUser()
+            advanceUntilIdle()
+
+            assertEquals(2, states.size)
+            assertEquals(LoginUiState(isLoading = true), states[0])
+            assertEquals(LoginUiState(isLoading = false, isSuccess = true), states[1])
+
+            job.cancel()
         }
-
-        viewModel.onSignInUser()
-        advanceUntilIdle()
-
-        assertEquals(2, states.size)
-        assertEquals(LoginUiState(isLoading = true), states[0])
-        assertEquals(LoginUiState(isLoading = false, isSuccess = true), states[1])
-
-        job.cancel()
-    }
 
     @Test
-    fun `onSignInUser should update loginState with error when signInUserUC fails`() = runTest {
-        val email = "test@example.com"
-        val password = "password123"
-        val errorMessage = "Login failed"
-        val failureResult = Result.failure<Unit>(Exception(errorMessage))
+    fun `onSignInUser should update loginState with error when signInUserUC fails`() =
+        runTest {
+            val email = "test@example.com"
+            val password = "password123"
+            val errorMessage = "Login failed"
+            val failureResult = Result.failure<Unit>(Exception(errorMessage))
 
-        coEvery { signInUserUC.invoke(email, password) } returns flow { emit(failureResult) }
+            coEvery { signInUserUC.invoke(email, password) } returns flow { emit(failureResult) }
 
-        viewModel.setEmail(email to true)
-        viewModel.setPassword(password to true)
+            viewModel.setEmail(email to true)
+            viewModel.setPassword(password to true)
 
-        val states = mutableListOf<LoginUiState>()
-        val job = launch {
-            viewModel.loginState.toList(states)
+            val states = mutableListOf<LoginUiState>()
+            val job =
+                launch {
+                    viewModel.loginState.toList(states)
+                }
+
+            viewModel.onSignInUser()
+            advanceUntilIdle()
+
+            assertEquals(2, states.size)
+            assertEquals(LoginUiState(isLoading = true), states[0])
+            assertEquals(
+                LoginUiState(isLoading = false, messageError = errorMessage),
+                states[1],
+            )
+
+            job.cancel()
         }
-
-        viewModel.onSignInUser()
-        advanceUntilIdle()
-
-        assertEquals(2, states.size)
-        assertEquals(LoginUiState(isLoading = true), states[0])
-        assertEquals(
-            LoginUiState(isLoading = false, messageError = errorMessage),
-            states[1]
-        )
-
-        job.cancel()
-    }
 
     @Test
     fun `setEmail should update loginUserInfo and emailState`() {

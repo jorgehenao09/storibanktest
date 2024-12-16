@@ -34,9 +34,7 @@ private const val MILLIS_2000 = 2000L
 private const val MILLIS_3000 = 3000L
 
 @Composable
-fun SuccessScreen(
-    onAction: (UiAction) -> Unit
-) {
+fun SuccessScreen(onAction: (UiAction) -> Unit) {
     var showTitle by remember { mutableStateOf(false) }
     var showLogo by remember { mutableStateOf(false) }
     var showWelcome by remember { mutableStateOf(false) }
@@ -57,7 +55,7 @@ fun SuccessScreen(
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AnimatedVisibility(showTitle) {
             Text(
@@ -66,15 +64,16 @@ fun SuccessScreen(
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.secondaryContainer,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
         }
         AnimatedVisibility(showLogo) {
             Image(
-                modifier = Modifier
-                    .size(200.dp),
+                modifier =
+                    Modifier
+                        .size(200.dp),
                 painter = painterResource(id = R.drawable.ic_success),
-                contentDescription = "success_logo"
+                contentDescription = "success_logo",
             )
         }
         AnimatedVisibility(showWelcome) {
@@ -84,7 +83,7 @@ fun SuccessScreen(
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
         }
     }

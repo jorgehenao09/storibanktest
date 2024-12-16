@@ -10,12 +10,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TextErrorComponent(
     modifier: Modifier = Modifier,
-    messageError: String
+    messageError: String,
 ) {
     Text(
         modifier = modifier.padding(start = 8.dp),
         text = messageError,
         style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.tertiary
+        color = MaterialTheme.colorScheme.tertiary,
     )
 }

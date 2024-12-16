@@ -17,27 +17,29 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(
-    private val isUserLoggedUC: IsUserLoggedUC,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : ViewModel() {
+class SplashViewModel
+    @Inject
+    constructor(
+        private val isUserLoggedUC: IsUserLoggedUC,
+        @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    ) : ViewModel() {
+        private val _splashState = MutableStateFlow(SplashState())
+        val splashState =
+            _splashState
+                .onStart {
+                    loginShouldBeShowed()
+                }.stateIn(
+                    viewModelScope,
+                    SharingStarted.Eagerly,
+                    SplashState(),
+                )
 
-    private val _splashState= MutableStateFlow(SplashState())
-    val splashState = _splashState
-        .onStart {
-            loginShouldBeShowed()
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.Eagerly,
-            SplashState()
-        )
-
-    private fun loginShouldBeShowed() {
-        isUserLoggedUC.invoke().map { result ->
-            result.fold(
-                onSuccess = { _splashState.emit(SplashState(isUserLogged = it)) },
-                onFailure = { _splashState.emit(SplashState(error = it.message, isUserLogged = false)) }
-            )
-        }.flowOn(ioDispatcher).launchIn(viewModelScope)
+        private fun loginShouldBeShowed() {
+            isUserLoggedUC.invoke().map { result ->
+                result.fold(
+                    onSuccess = { _splashState.emit(SplashState(isUserLogged = it)) },
+                    onFailure = { _splashState.emit(SplashState(error = it.message, isUserLogged = false)) },
+                )
+            }.flowOn(ioDispatcher).launchIn(viewModelScope)
+        }
     }
-}

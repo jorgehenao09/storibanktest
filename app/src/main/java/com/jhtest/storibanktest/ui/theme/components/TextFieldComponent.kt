@@ -53,7 +53,7 @@ enum class TextFieldValidation {
     USER_NAME,
     LAST_NAME,
     PASSWORD,
-    NONE
+    NONE,
 }
 
 @Composable
@@ -66,7 +66,7 @@ fun TextFieldScreen(
     validationType: TextFieldValidation = TextFieldValidation.NONE,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onTextChange: (Pair<String, Boolean>) -> Unit,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
 ) {
     var error by remember { mutableStateOf(String.Empty) }
     var isFocused by remember { mutableStateOf(false) }
@@ -92,38 +92,41 @@ fun TextFieldScreen(
     }
 
     Column(
-        modifier = modifier
-            .clickableNoRipple {
-                onClick?.invoke()
-            }
+        modifier =
+            modifier
+                .clickableNoRipple {
+                    onClick?.invoke()
+                },
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .border(
-                    width = 1.dp,
-                    color = borderColor,
-                    shape = RoundedCornerShape(size = 12.dp)
-                )
-                .background(color = backgroundColor, shape = RoundedCornerShape(size = 12.dp))
-                .padding(horizontal = 16.dp),
-            contentAlignment = Alignment.CenterStart
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .border(
+                        width = 1.dp,
+                        color = borderColor,
+                        shape = RoundedCornerShape(size = 12.dp),
+                    )
+                    .background(color = backgroundColor, shape = RoundedCornerShape(size = 12.dp))
+                    .padding(horizontal = 16.dp),
+            contentAlignment = Alignment.CenterStart,
         ) {
             BasicTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .indicatorLine(
-                        enabled = true,
-                        isError = false,
-                        interactionSource = interaction,
-                        colors = colors
-                    )
-                    .onFocusChanged {
-                        if (it.isFocused) {
-                            onClick?.invoke()
-                        }
-                    },
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .indicatorLine(
+                            enabled = true,
+                            isError = false,
+                            interactionSource = interaction,
+                            colors = colors,
+                        )
+                        .onFocusChanged {
+                            if (it.isFocused) {
+                                onClick?.invoke()
+                            }
+                        },
                 value = currentTextState,
                 interactionSource = interaction,
                 enabled = enabled,
@@ -141,7 +144,7 @@ fun TextFieldScreen(
                         interaction,
                         colors,
                         label,
-                        textSize
+                        textSize,
                     )
                 },
                 onValueChange = { text ->
@@ -158,7 +161,7 @@ fun TextFieldScreen(
                                 onError = {
                                     onTextChange.invoke(String.Empty to false)
                                     error = errorEmail
-                                }
+                                },
                             )
                         }
 
@@ -166,7 +169,8 @@ fun TextFieldScreen(
                             currentTextState = text
                             textIsNotEmpty(
                                 text = text,
-                                validation = text.trim().isNotEmpty() &&
+                                validation =
+                                    text.trim().isNotEmpty() &&
                                         text.containsNoEmojis() &&
                                         text.isValidLength(1, 20),
                                 onSuccess = {
@@ -176,7 +180,7 @@ fun TextFieldScreen(
                                 onError = {
                                     onTextChange.invoke(String.Empty to false)
                                     error = errorName
-                                }
+                                },
                             )
                         }
 
@@ -184,7 +188,8 @@ fun TextFieldScreen(
                             currentTextState = text
                             textIsNotEmpty(
                                 text = text,
-                                validation = text.trim().isNotEmpty() &&
+                                validation =
+                                    text.trim().isNotEmpty() &&
                                         text.containsNoEmojis() &&
                                         text.isValidLength(1, 15),
                                 onSuccess = {
@@ -194,7 +199,7 @@ fun TextFieldScreen(
                                 onError = {
                                     onTextChange.invoke(String.Empty to false)
                                     error = errorUserName
-                                }
+                                },
                             )
                         }
 
@@ -210,7 +215,7 @@ fun TextFieldScreen(
                                 onError = {
                                     onTextChange.invoke(String.Empty to false)
                                     error = errorLastName
-                                }
+                                },
                             )
                         }
 
@@ -226,26 +231,25 @@ fun TextFieldScreen(
                                 onError = {
                                     onTextChange.invoke(String.Empty to false)
                                     error = errorPassword
-                                }
+                                },
                             )
                         }
 
                         else -> Unit
                     }
-                }
+                },
             )
         }
         AnimatedVisibility(visible = error.isNotEmpty()) {
             TextErrorComponent(
                 modifier = Modifier.padding(top = 8.dp),
-                error
+                error,
             )
         }
     }
 }
 
-private fun emailValidations(text: String) =
-    text.isEmailValid() && text.containsNoEmojis() && text.isValidLength(5, 60)
+private fun emailValidations(text: String) = text.isEmailValid() && text.containsNoEmojis() && text.isValidLength(5, 60)
 
 @Composable
 private fun getBorderColor(error: String) =
@@ -255,7 +259,7 @@ private fun textIsNotEmpty(
     text: String,
     validation: Boolean,
     onSuccess: (text: String) -> Unit,
-    onError: () -> Unit
+    onError: () -> Unit,
 ) {
     if (text.isNotEmpty() && validation) {
         onSuccess.invoke(text)
@@ -273,7 +277,7 @@ private fun TextDecorationBox(
     interaction: MutableInteractionSource,
     colors: TextFieldColors,
     label: String,
-    textSize: TextUnit
+    textSize: TextUnit,
 ) {
     TextFieldDefaults.DecorationBox(
         value = currentTextState,
@@ -288,26 +292,26 @@ private fun TextDecorationBox(
             if (label.isNotEmpty()) {
                 LabelItem(label, textSize)
             }
-        }
+        },
     )
 }
 
 @Composable
 private fun LabelItem(
     label: String,
-    textSize: TextUnit
+    textSize: TextUnit,
 ) {
     Text(
         text = label,
         fontSize = textSize,
-        color = MaterialTheme.colorScheme.secondaryContainer
+        color = MaterialTheme.colorScheme.secondaryContainer,
     )
 }
 
 @Composable
 private fun getTextColors(
     enabled: Boolean,
-    readOnly: Boolean
+    readOnly: Boolean,
 ): TextFieldColors {
     val containerColor = getBackgroundColor(readOnly, enabled)
     return TextFieldDefaults.colors(
@@ -320,14 +324,14 @@ private fun getTextColors(
         focusedLabelColor = MaterialTheme.colorScheme.secondaryContainer,
         cursorColor = MaterialTheme.colorScheme.primary,
         disabledContainerColor = containerColor,
-        disabledIndicatorColor = Color.Transparent
+        disabledIndicatorColor = Color.Transparent,
     )
 }
 
 @Composable
 private fun getBackgroundColor(
     readOnly: Boolean,
-    enabled: Boolean
+    enabled: Boolean,
 ) = when {
     readOnly && enabled.not() -> MaterialTheme.colorScheme.background
     enabled -> MaterialTheme.colorScheme.background
@@ -342,6 +346,6 @@ fun EmailCheckoutPreview() {
         enabled = true,
         readOnly = false,
         label = "label",
-        onTextChange = { }
+        onTextChange = { },
     ) { }
 }

@@ -6,5 +6,5 @@ enum class AuthenticationScreens {
     SignUpScreen,
     FaceIdScreen,
     ErrorScreen,
-    SuccessScreen
+    SuccessScreen,
 }

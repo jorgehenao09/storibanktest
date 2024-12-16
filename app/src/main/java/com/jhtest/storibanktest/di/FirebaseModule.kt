@@ -16,7 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object FirebaseModule {
-
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
@@ -31,14 +30,12 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseAuthDataSource(
-        firebaseAuth: FirebaseAuth
-    ): FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
+    fun provideFirebaseAuthDataSource(firebaseAuth: FirebaseAuth): FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
 
     @Provides
     @Singleton
     fun provideFirebaseStorageDataSource(
         firebaseFirestore: FirebaseFirestore,
-        firebaseStorage: FirebaseStorage
+        firebaseStorage: FirebaseStorage,
     ): FirebaseStorageDataSource = FirebaseStorageDataSourceImpl(firebaseFirestore, firebaseStorage)
 }

@@ -15,58 +15,62 @@ import com.jhtest.storibanktest.ui.viewmodels.SignUpViewModel
 @Composable
 fun SignUpForm(
     signUpViewModel: SignUpViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         TextFieldScreen(
             modifier = Modifier.formModifier(),
             label = stringResource(id = R.string.authentication_view_textfield_name),
             defaultValue = signUpViewModel.getName(),
             validationType = TextFieldValidation.NAME,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text
-            ),
+            keyboardOptions =
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                ),
             onTextChange = {
                 signUpViewModel.setName(it)
-            }
+            },
         )
         TextFieldScreen(
             modifier = Modifier.formModifier(),
             label = stringResource(id = R.string.authentication_view_textfield_last_name),
             defaultValue = signUpViewModel.getLastName(),
             validationType = TextFieldValidation.LAST_NAME,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text
-            ),
+            keyboardOptions =
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                ),
             onTextChange = {
                 signUpViewModel.setLastName(it)
-            }
+            },
         )
         TextFieldScreen(
             modifier = Modifier.formModifier(),
             label = stringResource(id = R.string.authentication_view_textfield_email),
             defaultValue = signUpViewModel.getEmail(),
             validationType = TextFieldValidation.EMAIL,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email
-            ),
+            keyboardOptions =
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                ),
             onTextChange = {
                 signUpViewModel.setEmail(it)
-            }
+            },
         )
         TextFieldScreen(
             modifier = Modifier.formModifier(),
             label = stringResource(id = R.string.authentication_view_textfield_password),
             defaultValue = signUpViewModel.getPassword(),
             validationType = TextFieldValidation.PASSWORD,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
+            keyboardOptions =
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                ),
             onTextChange = {
                 signUpViewModel.setPassword(it)
-            }
+            },
         )
     }
 }

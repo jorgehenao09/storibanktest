@@ -25,7 +25,7 @@ import com.jhtest.storibanktest.ui.viewmodels.SignUpViewModel
 @Composable
 fun FaceIdScreen(
     signUpViewModel: SignUpViewModel,
-    onAction: (UiAction) -> Unit
+    onAction: (UiAction) -> Unit,
 ) {
     val signUpState by signUpViewModel.signUpState.collectAsStateWithLifecycle()
 
@@ -55,43 +55,47 @@ private fun FaceIdContent(signUpViewModel: SignUpViewModel) {
     val isSignUpButtonEnabled = signUpViewModel.isSignUpButtonEnabled
 
     ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .background(MaterialTheme.colorScheme.primary),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(MaterialTheme.colorScheme.primary),
     ) {
         val (header, photoSection, signUpBtn) = createRefs()
 
         FaceIdHeader(
-            modifier = Modifier
-                .constrainAs(header) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-                .padding(top = 84.dp)
+            modifier =
+                Modifier
+                    .constrainAs(header) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                    .padding(top = 84.dp),
         )
 
         FaceIdPhoto(
-            modifier = Modifier
-                .constrainAs(photoSection) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(parent.bottom)
-                }
-                .padding(start = 16.dp, end = 16.dp),
+            modifier =
+                Modifier
+                    .constrainAs(photoSection) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    }
+                    .padding(start = 16.dp, end = 16.dp),
             onImageCaptured = { uri ->
                 signUpViewModel.setFaceId(uri to true)
-            }
+            },
         )
 
         PrimaryButton(
-            modifier = Modifier.constrainAs(signUpBtn) {
-                bottom.linkTo(parent.bottom, 54.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
+            modifier =
+                Modifier.constrainAs(signUpBtn) {
+                    bottom.linkTo(parent.bottom, 54.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
             isButtonEnabled = isSignUpButtonEnabled,
             textValue = stringResource(R.string.label_finish),
             buttonColor = MaterialTheme.colorScheme.background,
@@ -99,7 +103,7 @@ private fun FaceIdContent(signUpViewModel: SignUpViewModel) {
             textColor = MaterialTheme.colorScheme.primary,
             onButtonClicked = {
                 signUpViewModel.onSignUp()
-            }
+            },
         )
     }
 }
@@ -108,6 +112,6 @@ private fun FaceIdContent(signUpViewModel: SignUpViewModel) {
 @Composable
 private fun FaceIdScreenPreview() {
     FaceIdScreen(
-        signUpViewModel = hiltViewModel<SignUpViewModel>()
+        signUpViewModel = hiltViewModel<SignUpViewModel>(),
     ) {}
 }

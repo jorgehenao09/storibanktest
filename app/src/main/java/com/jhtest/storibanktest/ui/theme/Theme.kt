@@ -6,25 +6,24 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.jhtest.storibanktest.ui.theme.components.utils.Shapes
 
-private val LightColorScheme = lightColorScheme(
-    primary = PrimaryColor,
-    secondary = SecondaryColor,
-    tertiary = TertiaryColor,
-    background = BackgroundColor,
-    primaryContainer = PrimaryContainerColor,
-    secondaryContainer = SecondaryContainerColor,
-    tertiaryContainer = TertiaryContainerColor,
-    surfaceContainer = SurfaceVariantColor
-)
+private val LightColorScheme =
+    lightColorScheme(
+        primary = PrimaryColor,
+        secondary = SecondaryColor,
+        tertiary = TertiaryColor,
+        background = BackgroundColor,
+        primaryContainer = PrimaryContainerColor,
+        secondaryContainer = SecondaryContainerColor,
+        tertiaryContainer = TertiaryContainerColor,
+        surfaceContainer = SurfaceVariantColor,
+    )
 
 @Composable
-fun StoriBankTTheme(
-    content: @Composable () -> Unit
-) {
+fun StoriBankTTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = LightColorScheme,
         typography = Typography(),
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

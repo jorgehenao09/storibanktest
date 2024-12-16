@@ -24,19 +24,22 @@ fun PrimaryButton(
     buttonColor: Color = MaterialTheme.colorScheme.primary,
     disabledButtonColor: Color? = null,
     textColor: Color = Color.White,
-    onButtonClicked: () -> Unit
+    onButtonClicked: () -> Unit,
 ) {
     Button(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 24.dp, end = 24.dp)
-            .height(48.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp)
+                .height(48.dp),
         shape = Shapes.medium,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (isButtonEnabled) buttonColor else MaterialTheme.colorScheme.primaryContainer,
-            disabledContainerColor = disabledButtonColor.takeIf { it != null } ?: Color.Unspecified),
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = if (isButtonEnabled) buttonColor else MaterialTheme.colorScheme.primaryContainer,
+                disabledContainerColor = disabledButtonColor.takeIf { it != null } ?: Color.Unspecified,
+            ),
         enabled = isButtonEnabled,
-        onClick = onButtonClicked
+        onClick = onButtonClicked,
     ) {
         Text(
             text = textValue,
@@ -51,6 +54,6 @@ fun PrimaryButton(
 private fun PrimaryButtonPreview() {
     PrimaryButton(
         isButtonEnabled = false,
-        onButtonClicked = {}
+        onButtonClicked = {},
     )
 }

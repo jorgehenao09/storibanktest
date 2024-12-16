@@ -33,9 +33,7 @@ private const val MILLIS_100 = 100L
 private const val MILLIS_500 = 500L
 
 @Composable
-fun ErrorScreen(
-    onAction: (UiAction) -> Unit,
-) {
+fun ErrorScreen(onAction: (UiAction) -> Unit) {
     var showContent by remember { mutableStateOf(false) }
     var showButton by remember { mutableStateOf(false) }
 
@@ -47,55 +45,58 @@ fun ErrorScreen(
     }
 
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         val (content, button) = createRefs()
 
         AnimatedVisibility(
             visible = showContent,
-            modifier = Modifier.constrainAs(content) {
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom)
-            }
+            modifier =
+                Modifier.constrainAs(content) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                },
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
-                    modifier = Modifier
-                        .size(150.dp),
+                    modifier =
+                        Modifier
+                            .size(150.dp),
                     painter = painterResource(id = R.drawable.ic_error),
-                    contentDescription = "error_logo"
+                    contentDescription = "error_logo",
                 )
 
                 Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp),
                     text = stringResource(R.string.authentication_view_error_description),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.secondaryContainer,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
             }
-
         }
 
         AnimatedVisibility(
             visible = showButton,
-            modifier = Modifier.constrainAs(button) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
+            modifier =
+                Modifier.constrainAs(button) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
         ) {
             PrimaryButton(
                 modifier = Modifier.padding(bottom = 56.dp),
-                textValue = stringResource(R.string.label_back)
+                textValue = stringResource(R.string.label_back),
             ) {
                 onAction(ErrorNavAction.NavigateBack)
             }

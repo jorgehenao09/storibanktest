@@ -22,15 +22,13 @@ import com.jhtest.storibanktest.ui.authentication.successScreen.SuccessScreen
 import com.jhtest.storibanktest.ui.viewmodels.SignUpViewModel
 
 @Composable
-fun AuthenticationNavigation(
-    onAction: (UiAction) -> Unit
-) {
+fun AuthenticationNavigation(onAction: (UiAction) -> Unit) {
     val signUpViewModel = hiltViewModel<SignUpViewModel>()
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = AuthenticationScreens.SplashScreen.name
+        startDestination = AuthenticationScreens.SplashScreen.name,
     ) {
         composable(AuthenticationScreens.SplashScreen.name) {
             SplashScreen { uiAction ->

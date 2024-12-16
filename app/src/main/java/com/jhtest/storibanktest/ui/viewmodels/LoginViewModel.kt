@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 data class LoginUserInfo(
@@ -28,69 +27,70 @@ data class LoginUserInfo(
 )
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val signInUserUC: SignInUserUC,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : ViewModel() {
+class LoginViewModel
+    @Inject
+    constructor(
+        private val signInUserUC: SignInUserUC,
+        @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    ) : ViewModel() {
+        private val _loginState: MutableSharedFlow<LoginUiState> =
+            MutableSharedFlow()
+        val loginState: SharedFlow<LoginUiState>
+            get() = _loginState.asSharedFlow()
 
-    private val _loginState: MutableSharedFlow<LoginUiState> =
-        MutableSharedFlow()
-    val loginState: SharedFlow<LoginUiState>
-        get() = _loginState.asSharedFlow()
+        private var emailState by mutableStateOf(false)
+        private var passwordState by mutableStateOf(false)
 
-    private var emailState by mutableStateOf(false)
-    private var passwordState by mutableStateOf(false)
+        val isButtonEnabled by derivedStateOf {
+            emailState && passwordState
+        }
 
-    val isButtonEnabled by derivedStateOf {
-        emailState && passwordState
-    }
+        private var loginUserInfo = LoginUserInfo()
 
-    private var loginUserInfo = LoginUserInfo()
-
-    fun onSignInUser() {
-        signInUserUC.invoke(loginUserInfo.email, loginUserInfo.password).map {
-            it.fold(
-                onSuccess = { _ ->
-                    _loginState.emit(
-                        LoginUiState(
-                            isLoading = false,
-                            isSuccess = true,
-                            messageError = String.Empty
+        fun onSignInUser() {
+            signInUserUC.invoke(loginUserInfo.email, loginUserInfo.password).map {
+                it.fold(
+                    onSuccess = { _ ->
+                        _loginState.emit(
+                            LoginUiState(
+                                isLoading = false,
+                                isSuccess = true,
+                                messageError = String.Empty,
+                            ),
                         )
-                    )
-                },
-                onFailure = { exception ->
-                    _loginState.emit(
-                        LoginUiState(
-                            isSuccess = false,
-                            isLoading = false,
-                            messageError = exception.message ?: String.Empty
+                    },
+                    onFailure = { exception ->
+                        _loginState.emit(
+                            LoginUiState(
+                                isSuccess = false,
+                                isLoading = false,
+                                messageError = exception.message ?: String.Empty,
+                            ),
                         )
-                    )
-                }
-            )
-        }.onStart {
-            _loginState.emit(
-                LoginUiState(
-                    isSuccess = false,
-                    isLoading = true,
-                    messageError = String.Empty
+                    },
                 )
-            )
-        }.flowOn(ioDispatcher).launchIn(viewModelScope)
+            }.onStart {
+                _loginState.emit(
+                    LoginUiState(
+                        isSuccess = false,
+                        isLoading = true,
+                        messageError = String.Empty,
+                    ),
+                )
+            }.flowOn(ioDispatcher).launchIn(viewModelScope)
+        }
+
+        fun setEmail(email: Pair<String, Boolean>) {
+            loginUserInfo = loginUserInfo.copy(email = email.first)
+            emailState = email.second
+        }
+
+        fun setPassword(password: Pair<String, Boolean>) {
+            loginUserInfo = loginUserInfo.copy(password = password.first)
+            passwordState = password.second
+        }
+
+        fun getEmail(): String = loginUserInfo.email
+
+        fun getPassword(): String = loginUserInfo.password
     }
-
-    fun setEmail(email: Pair<String, Boolean>) {
-        loginUserInfo = loginUserInfo.copy(email = email.first)
-        emailState = email.second
-    }
-
-    fun setPassword(password: Pair<String, Boolean>) {
-        loginUserInfo = loginUserInfo.copy(password = password.first)
-        passwordState = password.second
-    }
-
-    fun getEmail(): String = loginUserInfo.email
-
-    fun getPassword(): String = loginUserInfo.password
-}

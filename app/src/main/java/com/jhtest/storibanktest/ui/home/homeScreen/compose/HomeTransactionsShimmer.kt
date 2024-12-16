@@ -16,48 +16,51 @@ import com.jhtest.storibanktest.ui.theme.components.utils.Shapes
 import com.jhtest.storibanktest.ui.theme.components.utils.shimmerEffect
 
 @Composable
-internal fun HomeTransactionsShimmer(
-    modifier: Modifier = Modifier
-) {
+internal fun HomeTransactionsShimmer(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(horizontal = 24.dp),
     ) {
         Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .padding(top = 16.dp)
-                .background(Color.Transparent, Shapes.medium)
-                .shimmerEffect(radius = 8.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .padding(top = 16.dp)
+                    .background(Color.Transparent, Shapes.medium)
+                    .shimmerEffect(radius = 8.dp),
         )
 
         Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .padding(top = 16.dp)
-                .background(Color.Transparent, Shapes.medium)
-                .shimmerEffect(radius = 8.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .padding(top = 16.dp)
+                    .background(Color.Transparent, Shapes.medium)
+                    .shimmerEffect(radius = 8.dp),
         )
 
         Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .padding(top = 16.dp)
-                .background(Color.Transparent, Shapes.medium)
-                .shimmerEffect(radius = 8.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .padding(top = 16.dp)
+                    .background(Color.Transparent, Shapes.medium)
+                    .shimmerEffect(radius = 8.dp),
         )
 
         Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .padding(top = 16.dp)
-                .background(Color.Transparent, Shapes.medium)
-                .shimmerEffect(radius = 8.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .padding(top = 16.dp)
+                    .background(Color.Transparent, Shapes.medium)
+                    .shimmerEffect(radius = 8.dp),
         )
     }
 }

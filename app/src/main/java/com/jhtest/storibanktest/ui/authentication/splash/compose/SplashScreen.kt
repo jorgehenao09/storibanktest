@@ -1,6 +1,5 @@
 package com.jhtest.storibanktest.ui.authentication.splash.compose
 
-
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.TIRAMISU
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +26,7 @@ private const val MILLIS_1000 = 1000L
 @Composable
 internal fun SplashScreen(
     splashViewModel: SplashViewModel = hiltViewModel(),
-    onAction: (UiAction) -> Unit
+    onAction: (UiAction) -> Unit,
 ) {
     val splashState by splashViewModel.splashState.collectAsStateWithLifecycle()
 
@@ -67,7 +66,7 @@ internal fun SplashScreen(
         systemUiController.isNavigationBarVisible = false
         systemUiController.setStatusBarColor(
             color = Color.Transparent,
-            transformColorForLightContent = { backgroundColor }
+            transformColorForLightContent = { backgroundColor },
         )
         onDispose {}
     }

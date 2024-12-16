@@ -23,38 +23,42 @@ internal fun SignUpScreen(
     val isButtonEnabled = signUpViewModel.isContinueButtonEnabled
 
     ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
     ) {
         val (header, form, continueBtn) = createRefs()
 
         SignUpHeader(
-            modifier = Modifier
-                .constrainAs(header) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-                .padding(top = 24.dp)
+            modifier =
+                Modifier
+                    .constrainAs(header) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                    .padding(top = 24.dp),
         )
 
         SignUpForm(
             signUpViewModel = signUpViewModel,
-            modifier = Modifier.constrainAs(form) {
-                top.linkTo(header.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
+            modifier =
+                Modifier.constrainAs(form) {
+                    top.linkTo(header.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
         )
 
         PrimaryButton(
-            modifier = Modifier.constrainAs(continueBtn) {
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom, 54.dp)
-            },
-            isButtonEnabled = isButtonEnabled
+            modifier =
+                Modifier.constrainAs(continueBtn) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom, 54.dp)
+                },
+            isButtonEnabled = isButtonEnabled,
         ) {
             onAction(SignUpNavAction.NavigateToFaceId)
         }
@@ -65,6 +69,6 @@ internal fun SignUpScreen(
 @Composable
 private fun SignUpScreenPreview() {
     SignUpScreen(
-        signUpViewModel = hiltViewModel<SignUpViewModel>()
+        signUpViewModel = hiltViewModel<SignUpViewModel>(),
     ) { }
 }

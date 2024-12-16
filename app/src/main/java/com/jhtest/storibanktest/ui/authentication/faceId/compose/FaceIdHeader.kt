@@ -17,28 +17,31 @@ import com.jhtest.storibanktest.R
 @Composable
 internal fun FaceIdHeader(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .fillMaxWidth(),
     ) {
         Text(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
             text = stringResource(R.string.authentication_view_face_id_header),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = Color.White,
         )
 
         Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 32.dp, start = 24.dp, end = 24.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp, start = 24.dp, end = 24.dp),
             text = stringResource(R.string.authentication_view_face_id_description),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = Color.White,
         )
     }
 }

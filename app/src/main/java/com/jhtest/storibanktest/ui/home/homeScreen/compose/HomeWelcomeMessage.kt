@@ -15,21 +15,22 @@ import com.jhtest.storibanktest.R
 @Composable
 internal fun HomeWelcomeMessage(
     modifier: Modifier = Modifier,
-    userName: String
+    userName: String,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(16.dp),
     ) {
         Text(
             text = userName,
             style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         )
         Text(
             text = stringResource(R.string.home_view_welcome_to_your_mobile_bank),
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }

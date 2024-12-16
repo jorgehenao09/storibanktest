@@ -9,13 +9,13 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun DescriptionText(
     modifier: Modifier = Modifier,
-    textValue: String
+    textValue: String,
 ) {
     Text(
         modifier = modifier,
         style = MaterialTheme.typography.labelMedium,
         text = textValue,
-        color = MaterialTheme.colorScheme.secondaryContainer
+        color = MaterialTheme.colorScheme.secondaryContainer,
     )
 }
 
@@ -24,6 +24,6 @@ fun DescriptionText(
 private fun DescriptionTextPreview() {
     DescriptionText(
         modifier = Modifier,
-        "Testing text"
+        "Testing text",
     )
 }

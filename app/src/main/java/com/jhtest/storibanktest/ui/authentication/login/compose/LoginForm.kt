@@ -10,8 +10,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.jhtest.storibanktest.R
 import com.jhtest.storibanktest.ui.theme.components.DescriptionText
-import com.jhtest.storibanktest.ui.theme.components.TextFieldValidation
 import com.jhtest.storibanktest.ui.theme.components.TextFieldScreen
+import com.jhtest.storibanktest.ui.theme.components.TextFieldValidation
 import com.jhtest.storibanktest.ui.theme.components.utils.formModifier
 import com.jhtest.storibanktest.ui.viewmodels.LoginViewModel
 
@@ -21,11 +21,11 @@ internal fun LoginForm(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(vertical = 16.dp)
+        modifier = modifier.padding(vertical = 16.dp),
     ) {
         DescriptionText(
             modifier = Modifier.formModifier(),
-            textValue = stringResource(id = R.string.authentication_view_login_description_text)
+            textValue = stringResource(id = R.string.authentication_view_login_description_text),
         )
 
         TextFieldScreen(
@@ -33,24 +33,26 @@ internal fun LoginForm(
             label = stringResource(id = R.string.authentication_view_textfield_email),
             defaultValue = loginViewModel.getEmail(),
             validationType = TextFieldValidation.EMAIL,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email
-            ),
+            keyboardOptions =
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                ),
             onTextChange = {
                 loginViewModel.setEmail(it)
-            }
+            },
         )
         TextFieldScreen(
             modifier = Modifier.formModifier(),
             label = stringResource(id = R.string.authentication_view_textfield_password),
             defaultValue = loginViewModel.getPassword(),
             validationType = TextFieldValidation.PASSWORD,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
+            keyboardOptions =
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                ),
             onTextChange = {
                 loginViewModel.setPassword(it)
-            }
+            },
         )
     }
 }

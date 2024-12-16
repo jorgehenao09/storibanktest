@@ -25,11 +25,12 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    HomeNavigation {  }
+                    HomeNavigation { }
                 }
             }
         }
     }
+
     companion object {
         fun newIntent(from: Context): Intent {
             return Intent(from, HomeActivity::class.java)

@@ -9,14 +9,12 @@ import com.jhtest.storibanktest.ui.home.homeScreen.compose.HomeScreen
 import com.jhtest.storibanktest.ui.home.navigation.models.HomeScreens
 
 @Composable
-fun HomeNavigation(
-    onAction: (UiAction) -> Unit
-) {
+fun HomeNavigation(onAction: (UiAction) -> Unit) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = HomeScreens.HomeScreen.name
+        startDestination = HomeScreens.HomeScreen.name,
     ) {
         composable(HomeScreens.HomeScreen.name) {
             HomeScreen()

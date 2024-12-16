@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.jhtest.storibanktest.framework.datastore.USER_PREFERENCES
+import com.jhtest.storibanktest.data.datasources.UserPreferencesProtoDataStore
 import com.jhtest.storibanktest.data.datastore.UserPreferencesProto
+import com.jhtest.storibanktest.framework.datastore.USER_PREFERENCES
 import com.jhtest.storibanktest.framework.datastore.UserPreferencesProtoDataStoreImpl
 import com.jhtest.storibanktest.framework.datastore.UserPreferencesSerializer
-import com.jhtest.storibanktest.data.datasources.UserPreferencesProtoDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,21 +22,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
-
     @Singleton
     @Provides
     fun dataStoreUserProvide(
-        @ApplicationContext appContext: Context
+        @ApplicationContext appContext: Context,
     ): DataStore<UserPreferencesProto> =
         DataStoreFactory.create(
             produceFile = { appContext.preferencesDataStoreFile(USER_PREFERENCES) },
             serializer = UserPreferencesSerializer,
-            scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
         )
 
     @Provides
     @Singleton
-    fun userPreferencesDataStoreProvider(
-        userDataStore: DataStore<UserPreferencesProto>
-    ): UserPreferencesProtoDataStore = UserPreferencesProtoDataStoreImpl(userDataStore)
+    fun userPreferencesDataStoreProvider(userDataStore: DataStore<UserPreferencesProto>): UserPreferencesProtoDataStore =
+        UserPreferencesProtoDataStoreImpl(userDataStore)
 }

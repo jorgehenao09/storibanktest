@@ -10,7 +10,6 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @Module
 @InstallIn(ViewModelComponent::class)
 class HomeModule {
-
     @Provides
     @ViewModelScoped
     fun provideBankTransactionMapper() = BankTransactionMapper()

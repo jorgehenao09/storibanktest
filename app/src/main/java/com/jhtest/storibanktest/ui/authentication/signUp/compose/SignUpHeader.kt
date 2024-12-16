@@ -22,42 +22,43 @@ import androidx.compose.ui.unit.dp
 import com.jhtest.storibanktest.R
 
 @Composable
-fun SignUpHeader(
-    modifier: Modifier = Modifier
-) {
+fun SignUpHeader(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(16.dp),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp, start = 8.dp, end = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp, start = 8.dp, end = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
                 modifier = Modifier.align(Alignment.Bottom),
                 text = stringResource(R.string.authentication_view_signup_header),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
 
             Image(
-                modifier = Modifier
-                    .width(120.dp)
-                    .height(80.dp),
+                modifier =
+                    Modifier
+                        .width(120.dp)
+                        .height(80.dp),
                 painter = painterResource(id = R.drawable.ic_stori_logo),
                 contentScale = ContentScale.Fit,
-                contentDescription = "logo"
+                contentDescription = "logo",
             )
         }
 
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.authentication_view_signup_description),
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }

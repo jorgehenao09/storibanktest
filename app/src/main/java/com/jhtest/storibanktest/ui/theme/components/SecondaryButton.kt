@@ -17,20 +17,21 @@ fun SecondaryButton(
     modifier: Modifier = Modifier,
     isButtonEnabled: Boolean = true,
     textValue: String,
-    onButtonClicked: () -> Unit
+    onButtonClicked: () -> Unit,
 ) {
     TextButton(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(48.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(48.dp),
         shape = Shapes.medium,
         enabled = isButtonEnabled,
-        onClick = { onButtonClicked() }
+        onClick = { onButtonClicked() },
     ) {
         Text(
             text = textValue,
             style = MaterialTheme.typography.labelLarge,
-            color = if (isButtonEnabled )MaterialTheme.colorScheme.primary else Color.Gray,
+            color = if (isButtonEnabled)MaterialTheme.colorScheme.primary else Color.Gray,
         )
     }
 }
@@ -40,6 +41,6 @@ fun SecondaryButton(
 private fun SecondaryButtonPreview() {
     SecondaryButton(
         textValue = "Sign Up",
-        onButtonClicked = {}
+        onButtonClicked = {},
     )
 }

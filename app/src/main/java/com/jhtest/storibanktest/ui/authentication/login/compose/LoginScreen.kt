@@ -28,10 +28,10 @@ import com.jhtest.storibanktest.ui.viewmodels.LoginViewModel
 @Composable
 internal fun LoginScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
-    onAction: (UiAction) -> Unit
+    onAction: (UiAction) -> Unit,
 ) {
     val loginUiState by loginViewModel.loginState.collectAsStateWithLifecycle(
-        LoginUiState()
+        LoginUiState(),
     )
 
     BackHandler {}
@@ -57,62 +57,66 @@ internal fun LoginScreen(
             onAction(it)
         }
     }
-
 }
 
 @Composable
 private fun LoginContent(
     loginViewModel: LoginViewModel,
-    onAction: (UiAction) -> Unit
+    onAction: (UiAction) -> Unit,
 ) {
     val isButtonEnabled = loginViewModel.isButtonEnabled
 
     ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
     ) {
         val (header, form, loginButton, signUp) = createRefs()
 
         Image(
-            modifier = Modifier
-                .constrainAs(header) {
-                    top.linkTo(parent.top, 50.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-                .size(200.dp),
+            modifier =
+                Modifier
+                    .constrainAs(header) {
+                        top.linkTo(parent.top, 50.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                    .size(200.dp),
             painter = painterResource(id = R.drawable.ic_stori_logo),
             contentScale = ContentScale.Fit,
-            contentDescription = "logo"
+            contentDescription = "logo",
         )
 
         LoginForm(
             loginViewModel = loginViewModel,
-            modifier = Modifier.constrainAs(form) {
-                top.linkTo(header.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
+            modifier =
+                Modifier.constrainAs(form) {
+                    top.linkTo(header.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
         )
 
         PrimaryButton(
-            modifier = Modifier.constrainAs(loginButton) {
-                top.linkTo(form.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            isButtonEnabled = isButtonEnabled
+            modifier =
+                Modifier.constrainAs(loginButton) {
+                    top.linkTo(form.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
+            isButtonEnabled = isButtonEnabled,
         ) {
             loginViewModel.onSignInUser()
         }
 
         SignUpInformation(
-            modifier = Modifier.constrainAs(signUp) {
-                top.linkTo(loginButton.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            }
+            modifier =
+                Modifier.constrainAs(signUp) {
+                    top.linkTo(loginButton.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
         ) {
             onAction(LoginNavAction.NavigateToSignUp)
         }
@@ -124,6 +128,6 @@ private fun LoginContent(
 private fun LoginScreenPreview() {
     LoginScreen(
         loginViewModel = hiltViewModel(),
-        onAction = {}
+        onAction = {},
     )
 }

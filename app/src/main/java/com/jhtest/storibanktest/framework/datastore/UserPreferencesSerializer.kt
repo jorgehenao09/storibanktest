@@ -20,6 +20,6 @@ object UserPreferencesSerializer : Serializer<UserPreferencesProto> {
 
     override suspend fun writeTo(
         t: UserPreferencesProto,
-        output: OutputStream
+        output: OutputStream,
     ) = t.writeTo(output)
 }

@@ -16,10 +16,9 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 
 class SignInUserUCTest {
-
     private lateinit var signInUserUC: SignInUserUC
     private val signInRepository: SignInRepository = mockk()
     private val userStorageRepository: UserStorageRepository = mockk()
@@ -32,91 +31,99 @@ class SignInUserUCTest {
     }
 
     @Test
-    fun `invoke should emit success when all operations succeed`() = runTest {
-        val email = "test@example.com"
-        val password = "password123"
-        val uid = "12345"
-        val userResponse = mockk<FirebaseUser>()
-        val userData = UserData(name = "John", lastName = "Doe", email = "test@example.com")
+    fun `invoke should emit success when all operations succeed`() =
+        runTest {
+            val email = "test@example.com"
+            val password = "password123"
+            val uid = "12345"
+            val userResponse = mockk<FirebaseUser>()
+            val userData = UserData(name = "John", lastName = "Doe", email = "test@example.com")
 
-        every { userResponse.uid } returns uid
+            every { userResponse.uid } returns uid
 
-        coEvery { signInRepository.signInUser(email, password) } returns flow {
-            emit(Result.success(userResponse))
-        }
-        coEvery { userCloudStorageRepository.getUserData(uid) } returns flow {
-            emit(Result.success(userData))
-        }
-        coJustRun {
-            userStorageRepository.saveUserData(
-                uid,
-                userData.name,
-                userData.lastName,
-                userData.email
-            )
-        }
-
-        val result = signInUserUC(email, password).toList()
-
-        assertEquals(Result.success(Unit), result.first())
-        coVerifyOrder {
-            signInRepository.signInUser(email, password)
-            userCloudStorageRepository.getUserData(uid)
-            userStorageRepository.saveUserData(
-                uid,
-                userData.name,
-                userData.lastName,
-                userData.email
-            )
-        }
-    }
-
-    @Test
-    fun `invoke should emit failure when signInRepository fails`() = runTest {
-        val email = "test@example.com"
-        val password = "password123"
-        val error = Exception("Sign in failed")
-
-        coEvery { signInRepository.signInUser(email, password) } returns flow {
-            emit(
-                Result.failure(
-                    error
+            coEvery { signInRepository.signInUser(email, password) } returns
+                flow {
+                    emit(Result.success(userResponse))
+                }
+            coEvery { userCloudStorageRepository.getUserData(uid) } returns
+                flow {
+                    emit(Result.success(userData))
+                }
+            coJustRun {
+                userStorageRepository.saveUserData(
+                    uid,
+                    userData.name,
+                    userData.lastName,
+                    userData.email,
                 )
-            )
+            }
+
+            val result = signInUserUC(email, password).toList()
+
+            assertEquals(Result.success(Unit), result.first())
+            coVerifyOrder {
+                signInRepository.signInUser(email, password)
+                userCloudStorageRepository.getUserData(uid)
+                userStorageRepository.saveUserData(
+                    uid,
+                    userData.name,
+                    userData.lastName,
+                    userData.email,
+                )
+            }
         }
-
-        val result = signInUserUC(email, password).toList()
-
-        assertEquals(Result.failure<Unit>(error), result.first())
-        coVerify { signInRepository.signInUser(email, password) }
-        coVerify(exactly = 0) { userCloudStorageRepository.getUserData(any()) }
-        coVerify(exactly = 0) { userStorageRepository.saveUserData(any(), any(), any(), any()) }
-    }
 
     @Test
-    fun `invoke should emit failure when userCloudStorageRepository fails`() = runTest {
-        val email = "test@example.com"
-        val password = "password123"
-        val uid = "12345"
-        val userResponse = mockk<FirebaseUser>()
-        val error = Exception("Failed to fetch user data")
+    fun `invoke should emit failure when signInRepository fails`() =
+        runTest {
+            val email = "test@example.com"
+            val password = "password123"
+            val error = Exception("Sign in failed")
 
-        every { userResponse.uid } returns uid
+            coEvery { signInRepository.signInUser(email, password) } returns
+                flow {
+                    emit(
+                        Result.failure(
+                            error,
+                        ),
+                    )
+                }
 
-        coEvery { signInRepository.signInUser(email, password) } returns flow {
-            emit(Result.success(userResponse))
+            val result = signInUserUC(email, password).toList()
+
+            assertEquals(Result.failure<Unit>(error), result.first())
+            coVerify { signInRepository.signInUser(email, password) }
+            coVerify(exactly = 0) { userCloudStorageRepository.getUserData(any()) }
+            coVerify(exactly = 0) { userStorageRepository.saveUserData(any(), any(), any(), any()) }
         }
-        coEvery { userCloudStorageRepository.getUserData(uid) } returns flow {
-            emit(Result.failure(error))
-        }
 
-        val result = signInUserUC(email, password).toList()
+    @Test
+    fun `invoke should emit failure when userCloudStorageRepository fails`() =
+        runTest {
+            val email = "test@example.com"
+            val password = "password123"
+            val uid = "12345"
+            val userResponse = mockk<FirebaseUser>()
+            val error = Exception("Failed to fetch user data")
 
-        assertEquals(Result.failure<Unit>(error), result.first())
-        coVerifyOrder {
-            signInRepository.signInUser(email, password)
-            userCloudStorageRepository.getUserData(uid)
+            every { userResponse.uid } returns uid
+
+            coEvery { signInRepository.signInUser(email, password) } returns
+                flow {
+                    emit(Result.success(userResponse))
+                }
+            coEvery { userCloudStorageRepository.getUserData(uid) } returns
+                flow {
+                    emit(Result.failure(error))
+                }
+
+            val result = signInUserUC(email, password).toList()
+
+            assertEquals(Result.failure<Unit>(error), result.first())
+            coVerifyOrder {
+                signInRepository.signInUser(email, password)
+                userCloudStorageRepository.getUserData(uid)
+            }
+            coVerify(exactly = 0) { userStorageRepository.saveUserData(any(), any(), any(), any()) }
         }
-        coVerify(exactly = 0) { userStorageRepository.saveUserData(any(), any(), any(), any()) }
-    }
 }

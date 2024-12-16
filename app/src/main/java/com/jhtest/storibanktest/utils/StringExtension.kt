@@ -18,7 +18,7 @@ fun String.containsNoEmojis(): Boolean {
 
 fun String.isValidLength(
     minLength: Int,
-    maxLength: Int
+    maxLength: Int,
 ): Boolean {
     return this.length in minLength..maxLength
 }

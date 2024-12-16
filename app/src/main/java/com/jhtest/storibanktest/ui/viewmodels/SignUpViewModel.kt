@@ -33,88 +33,90 @@ data class SignUpUserInfo(
 )
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(
-    private val signUpUC: SignUpUC,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : ViewModel() {
+class SignUpViewModel
+    @Inject
+    constructor(
+        private val signUpUC: SignUpUC,
+        @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    ) : ViewModel() {
+        private val _signUpState: MutableStateFlow<SignUpUiState> =
+            MutableStateFlow(SignUpUiState())
+        val signUpState: StateFlow<SignUpUiState>
+            get() = _signUpState.asStateFlow()
 
-    private val _signUpState: MutableStateFlow<SignUpUiState> =
-        MutableStateFlow(SignUpUiState())
-    val signUpState: StateFlow<SignUpUiState>
-        get() = _signUpState.asStateFlow()
+        private var nameState by mutableStateOf(false)
+        private var lastNameState by mutableStateOf(false)
+        private var emailState by mutableStateOf(false)
+        private var passwordState by mutableStateOf(false)
+        private var faceIdState by mutableStateOf(false)
 
-    private var nameState by mutableStateOf(false)
-    private var lastNameState by mutableStateOf(false)
-    private var emailState by mutableStateOf(false)
-    private var passwordState by mutableStateOf(false)
-    private var faceIdState by mutableStateOf(false)
+        val isContinueButtonEnabled by derivedStateOf {
+            emailState && passwordState && nameState && lastNameState
+        }
 
-    val isContinueButtonEnabled by derivedStateOf {
-        emailState && passwordState && nameState && lastNameState
-    }
+        val isSignUpButtonEnabled by derivedStateOf {
+            isContinueButtonEnabled && faceIdState
+        }
 
-    val isSignUpButtonEnabled by derivedStateOf {
-        isContinueButtonEnabled && faceIdState
-    }
+        private var signUpUserInfo = SignUpUserInfo()
 
-    private var signUpUserInfo = SignUpUserInfo()
-
-    fun onSignUp() {
-        signUpUC.invoke(signUpUserInfo).map { result ->
-            result.fold(
-                onSuccess = {
-                    _signUpState.update { state ->
-                        state.copy(
-                            isLoading = false,
-                            isSuccess = true
-                        )
-                    }
-                }, onFailure = { exception ->
-                    _signUpState.update { state ->
-                        state.copy(
-                            isLoading = false,
-                            messageError = exception.message ?: String.Empty
-                        )
-                    }
+        fun onSignUp() {
+            signUpUC.invoke(signUpUserInfo).map { result ->
+                result.fold(
+                    onSuccess = {
+                        _signUpState.update { state ->
+                            state.copy(
+                                isLoading = false,
+                                isSuccess = true,
+                            )
+                        }
+                    },
+                    onFailure = { exception ->
+                        _signUpState.update { state ->
+                            state.copy(
+                                isLoading = false,
+                                messageError = exception.message ?: String.Empty,
+                            )
+                        }
+                    },
+                )
+            }.onStart {
+                _signUpState.update { state ->
+                    state.copy(isLoading = true)
                 }
-            )
-        }.onStart {
-            _signUpState.update { state ->
-                state.copy(isLoading = true)
-            }
-        }.flowOn(ioDispatcher).launchIn(viewModelScope)
+            }.flowOn(ioDispatcher).launchIn(viewModelScope)
+        }
+
+        fun setName(name: Pair<String, Boolean>) {
+            signUpUserInfo = signUpUserInfo.copy(name = name.first)
+            nameState = name.second
+        }
+
+        fun setLastName(lastName: Pair<String, Boolean>) {
+            signUpUserInfo = signUpUserInfo.copy(lastName = lastName.first)
+            lastNameState = lastName.second
+        }
+
+        fun setEmail(email: Pair<String, Boolean>) {
+            signUpUserInfo = signUpUserInfo.copy(email = email.first)
+            emailState = email.second
+        }
+
+        fun setPassword(password: Pair<String, Boolean>) {
+            signUpUserInfo = signUpUserInfo.copy(password = password.first)
+            passwordState = password.second
+        }
+
+        fun setFaceId(faceId: Pair<Uri, Boolean>) {
+            signUpUserInfo = signUpUserInfo.copy(faceId = faceId.first)
+            faceIdState = faceId.second
+        }
+
+        fun getName(): String = signUpUserInfo.name
+
+        fun getLastName(): String = signUpUserInfo.lastName
+
+        fun getEmail(): String = signUpUserInfo.email
+
+        fun getPassword(): String = signUpUserInfo.password
     }
-
-    fun setName(name: Pair<String, Boolean>) {
-        signUpUserInfo = signUpUserInfo.copy(name = name.first)
-        nameState = name.second
-    }
-
-    fun setLastName(lastName: Pair<String, Boolean>) {
-        signUpUserInfo = signUpUserInfo.copy(lastName = lastName.first)
-        lastNameState = lastName.second
-    }
-
-    fun setEmail(email: Pair<String, Boolean>) {
-        signUpUserInfo = signUpUserInfo.copy(email = email.first)
-        emailState = email.second
-    }
-
-    fun setPassword(password: Pair<String, Boolean>) {
-        signUpUserInfo = signUpUserInfo.copy(password = password.first)
-        passwordState = password.second
-    }
-
-    fun setFaceId(faceId: Pair<Uri, Boolean>) {
-        signUpUserInfo = signUpUserInfo.copy(faceId = faceId.first)
-        faceIdState = faceId.second
-    }
-
-    fun getName(): String = signUpUserInfo.name
-
-    fun getLastName(): String = signUpUserInfo.lastName
-
-    fun getEmail(): String = signUpUserInfo.email
-
-    fun getPassword(): String = signUpUserInfo.password
-}
