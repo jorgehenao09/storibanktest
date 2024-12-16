@@ -42,7 +42,9 @@ class AuthenticationActivity : ComponentActivity() {
                 ) {
                     AuthenticationNavigation { uiAction ->
                         when (uiAction) {
-                            is SplashNavAction.NavigateToHome, LoginNavAction.NavigateToHome, SuccessNavAction.NavigateToHome -> {
+                            is SplashNavAction.NavigateToHome,
+                            LoginNavAction.NavigateToHome,
+                            SuccessNavAction.NavigateToHome -> {
                                 keepSplashOpened = false
                                 launchHomeActivity()
                             }
