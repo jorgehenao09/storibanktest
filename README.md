@@ -50,6 +50,11 @@ To see a user with transactions please use the user: pepito@mail.com pass: 12345
 | --- | --- |
 | Initial state | ![Captura de pantalla 2024-12-04 a la(s) 8 14 11 a m](https://github.com/user-attachments/assets/a69938c6-ef45-4b9c-9736-aaefa7485b8f) |
 
+|  | HomeScreen |
+| --- | --- |
+| Loading state | ![Captura de pantalla 2024-12-16 a la(s) 11 19 59 a m](https://github.com/user-attachments/assets/a86d746c-aec8-4e59-8690-6a46a0d0af52) |
+| Success state | ![Captura de pantalla 2024-12-16 a la(s) 11 19 27 a m](https://github.com/user-attachments/assets/be65b007-234a-4a1e-b8f1-2395f2fedf5a) |
+
 ## Tools used
 
 * Jetpack compose
