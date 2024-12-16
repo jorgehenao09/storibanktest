@@ -7,4 +7,6 @@ interface UserStorageRepository {
     fun isUserLogged(): Flow<Result<Boolean>>
 
     suspend fun saveUserData(userId: String, name: String, lastName: String, email: String)
+
+    fun getUserId(): Flow<Result<String>>
 }

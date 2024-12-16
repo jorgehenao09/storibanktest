@@ -35,4 +35,11 @@ class UserStorageRepositoryImpl @Inject constructor(
                 .build()
         )
     }
+
+    override fun getUserId() = flow {
+        val userId = userPreferencesProtoDataStore.userDataProto.first().customerId
+        emit(Result.success(userId))
+    }.catch {
+        emit(Result.failure(it))
+    }
 }

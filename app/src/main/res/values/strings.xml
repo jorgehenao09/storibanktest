@@ -34,4 +34,12 @@
     <string name="authentication_view_success_welcome" translatable="false">BIENVENIDO</string>
 
     <string name="authentication_view_error_description" translatable="false">Ha ocurrido un error, vuelve a intentarlo</string>
+
+    <string name="home_view_tip_positive_value" translatable="false">Mantén tu saldo positivo.</string>
+    <string name="home_view_tip_avoid_unrecognizable_transfers" translatable="false">Evita transferencias no reconocidas.</string>
+    <string name="home_view_tip_check_movements" translatable="false">Revisa tus movimientos regularmente.</string>
+    <string name="home_view_how_to_handle_your_account" translatable="false">Tips para manejar tu cuenta</string>
+    <string name="home_view_welcome_to_your_mobile_bank" translatable="false">¡Bienvenido a tu banca móvil, Stori!</string>
+    <string name="home_view_transactions_title" translatable="false">Últimas transacciones</string>
+    <string name="home_view_transactions_empty" translatable="false">¡NO HAY TRANSACCIONES REGISTRADAS!</string>
 </resources>
