@@ -26,7 +26,7 @@ jobs:
         run: ./gradlew build
 
       - name: Restore google-services.json
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 -d > app/google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" > app/google-services.json
 
       - name: Check Lint rules
         run: ./gradlew ktlintCheck --configuration-cache
