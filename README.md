@@ -67,6 +67,11 @@ To see a user with transactions please use the user: pepito@mail.com pass: 12345
 * StateFlow
 * Navigation Compose
 * Hilt (Dependency injection)
+* Coil
+* Camera X
+* Firebase Authentication
+* Firebase Firestore Database
+* Firebase Storage
 * Unit testing with Mockk and JUnit
 * Gson
 * Retrofit
