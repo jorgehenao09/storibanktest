@@ -204,7 +204,9 @@ internal fun FaceIdPhoto(
                         outputOptions,
                         ContextCompat.getMainExecutor(context),
                         object : ImageCapture.OnImageSavedCallback {
-                            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                            override fun onImageSaved(
+                                outputFileResults: ImageCapture.OutputFileResults
+                            ) {
                                 val uri = Uri.fromFile(file)
                                 capturedUri = uri
                                 onImageCaptured(uri)

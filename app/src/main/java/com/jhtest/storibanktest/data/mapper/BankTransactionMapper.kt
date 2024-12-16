@@ -5,7 +5,9 @@ import com.jhtest.storibanktest.domain.models.BankTransactionListModel
 import com.jhtest.storibanktest.domain.models.BankTransactionModel
 
 class BankTransactionMapper {
-    internal fun mapToBankTransactionListModel(transactions: BankTransactionBody): BankTransactionListModel =
+    internal fun mapToBankTransactionListModel(
+        transactions: BankTransactionBody
+    ): BankTransactionListModel =
         BankTransactionListModel(
             transactions =
                 transactions.transactions?.map { transaction ->

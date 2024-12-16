@@ -32,7 +32,8 @@ class UserStorageRepositoryImplTest {
                     every { this@mockk.userLogged } returns userLogged
                 }
 
-            every { userPreferencesProtoDataStore.userDataProto } returns flow { emit(userPreferencesProto) }
+            every { userPreferencesProtoDataStore.userDataProto } returns
+                flow { emit(userPreferencesProto) }
 
             val result = userStorageRepository.isUserLogged().toList()
 

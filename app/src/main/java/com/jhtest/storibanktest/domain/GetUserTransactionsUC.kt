@@ -19,11 +19,16 @@ class GetUserTransactionsUC
                 userStorageRepository.getUserId().collect { result ->
                     result.fold(
                         onSuccess = { userId ->
-                            userCloudStorageRepository.getUserTransactions(userId).collect { result ->
+                            userCloudStorageRepository.getUserTransactions(userId).collect {
+                                    result ->
                                 result.fold(
                                     onSuccess = { response ->
                                         with(bankTransactionMapper) {
-                                            emit(Result.success(mapToBankTransactionListModel(response)))
+                                            emit(
+                                                Result.success(
+                                                    mapToBankTransactionListModel(response)
+                                                )
+                                            )
                                         }
                                     },
                                     onFailure = { emit(Result.failure(it)) },

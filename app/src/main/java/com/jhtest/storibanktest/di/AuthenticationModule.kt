@@ -23,7 +23,9 @@ import dagger.hilt.android.scopes.ViewModelScoped
 class AuthenticationModule {
     @Provides
     @ViewModelScoped
-    fun provideSplashRepository(userPreferencesProtoDataStore: UserPreferencesProtoDataStore): UserStorageRepository =
+    fun provideSplashRepository(
+        userPreferencesProtoDataStore: UserPreferencesProtoDataStore
+    ): UserStorageRepository =
         UserStorageRepositoryImpl(
             userPreferencesProtoDataStore = userPreferencesProtoDataStore,
         )
@@ -40,8 +42,9 @@ class AuthenticationModule {
 
     @Provides
     @ViewModelScoped
-    fun provideUserCloudStorageRepository(firebaseFirestoreDataSource: FirebaseStorageDataSource): UserCloudStorageRepository =
-        UserCloudStorageRepositoryImpl(firebaseFirestoreDataSource)
+    fun provideUserCloudStorageRepository(
+        firebaseFirestoreDataSource: FirebaseStorageDataSource
+    ): UserCloudStorageRepository = UserCloudStorageRepositoryImpl(firebaseFirestoreDataSource)
 
     @Provides
     @ViewModelScoped

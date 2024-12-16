@@ -38,7 +38,11 @@ class SplashViewModel
             isUserLoggedUC.invoke().map { result ->
                 result.fold(
                     onSuccess = { _splashState.emit(SplashState(isUserLogged = it)) },
-                    onFailure = { _splashState.emit(SplashState(error = it.message, isUserLogged = false)) },
+                    onFailure = {
+                        _splashState.emit(
+                            SplashState(error = it.message, isUserLogged = false)
+                        )
+                    },
                 )
             }.flowOn(ioDispatcher).launchIn(viewModelScope)
         }

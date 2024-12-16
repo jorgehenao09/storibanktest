@@ -30,7 +30,8 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseAuthDataSource(firebaseAuth: FirebaseAuth): FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
+    fun provideFirebaseAuthDataSource(firebaseAuth: FirebaseAuth): FirebaseAuthDataSource =
+        FirebaseAuthDataSourceImpl(firebaseAuth)
 
     @Provides
     @Singleton

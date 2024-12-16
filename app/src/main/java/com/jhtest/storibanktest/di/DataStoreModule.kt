@@ -35,6 +35,7 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun userPreferencesDataStoreProvider(userDataStore: DataStore<UserPreferencesProto>): UserPreferencesProtoDataStore =
-        UserPreferencesProtoDataStoreImpl(userDataStore)
+    fun userPreferencesDataStoreProvider(
+        userDataStore: DataStore<UserPreferencesProto>
+    ): UserPreferencesProtoDataStore = UserPreferencesProtoDataStoreImpl(userDataStore)
 }

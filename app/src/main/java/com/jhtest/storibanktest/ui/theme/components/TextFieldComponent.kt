@@ -249,7 +249,8 @@ fun TextFieldScreen(
     }
 }
 
-private fun emailValidations(text: String) = text.isEmailValid() && text.containsNoEmojis() && text.isValidLength(5, 60)
+private fun emailValidations(text: String) =
+    text.isEmailValid() && text.containsNoEmojis() && text.isValidLength(5, 60)
 
 @Composable
 private fun getBorderColor(error: String) =

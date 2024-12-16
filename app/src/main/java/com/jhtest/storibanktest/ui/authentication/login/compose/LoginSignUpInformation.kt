@@ -26,7 +26,9 @@ internal fun SignUpInformation(
                 Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-            textValue = stringResource(id = R.string.authentication_view_login_sign_up_description_text),
+            textValue = stringResource(
+                id = R.string.authentication_view_login_sign_up_description_text
+            ),
         )
 
         SecondaryButton(
