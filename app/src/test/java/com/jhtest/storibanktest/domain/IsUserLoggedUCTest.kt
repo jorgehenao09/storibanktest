@@ -19,35 +19,38 @@ class IsUserLoggedUCTest {
     private val isUserLoggedUC = IsUserLoggedUC(userStorageRepository)
 
     @Test
-    fun `invoke should return true when user is logged in`() = runTest {
-        every { userStorageRepository.isUserLogged() } returns flowOf(Result.success(true))
+    fun `invoke should return true when user is logged in`() =
+        runTest {
+            every { userStorageRepository.isUserLogged() } returns flowOf(Result.success(true))
 
-        val result = isUserLoggedUC().first()
+            val result = isUserLoggedUC().first()
 
-        Assert.assertTrue(result.isSuccess)
-        assertEquals(true, result.getOrNull())
-    }
-
-    @Test
-    fun `invoke should return false when user is not logged in`() = runTest {
-        every { userStorageRepository.isUserLogged() } returns flowOf(Result.success(false))
-
-        val result = isUserLoggedUC().first()
-
-        Assert.assertTrue(result.isSuccess)
-        assertEquals(false, result.getOrNull())
-    }
+            Assert.assertTrue(result.isSuccess)
+            assertEquals(true, result.getOrNull())
+        }
 
     @Test
-    fun `invoke should return failure when userStorageRepository fails`() = runTest {
-        val exception = Exception("Failed to check user login status")
-        every { userStorageRepository.isUserLogged() } returns flowOf(Result.failure(exception))
+    fun `invoke should return false when user is not logged in`() =
+        runTest {
+            every { userStorageRepository.isUserLogged() } returns flowOf(Result.success(false))
 
-        val result = isUserLoggedUC().first()
+            val result = isUserLoggedUC().first()
 
-        Assert.assertTrue(result.isFailure)
-        assertEquals(exception, result.exceptionOrNull())
-    }
+            Assert.assertTrue(result.isSuccess)
+            assertEquals(false, result.getOrNull())
+        }
+
+    @Test
+    fun `invoke should return failure when userStorageRepository fails`() =
+        runTest {
+            val exception = Exception("Failed to check user login status")
+            every { userStorageRepository.isUserLogged() } returns flowOf(Result.failure(exception))
+
+            val result = isUserLoggedUC().first()
+
+            Assert.assertTrue(result.isFailure)
+            assertEquals(exception, result.exceptionOrNull())
+        }
 
     @After
     fun tearDown() {

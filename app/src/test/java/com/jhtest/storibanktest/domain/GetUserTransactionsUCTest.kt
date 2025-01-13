@@ -31,68 +31,73 @@ class GetUserTransactionsUCTest {
         )
 
     @Test
-    fun `invoke should return mapped transaction list when all dependencies succeed`() = runTest {
-        val userId = "testUserId"
-        val transactionResponse = mockk<BankTransactionBody>()
-        val mappedTransactionList = mockk<BankTransactionListModel>()
+    fun `invoke should return mapped transaction list when all dependencies succeed`() =
+        runTest {
+            val userId = "testUserId"
+            val transactionResponse = mockk<BankTransactionBody>()
+            val mappedTransactionList = mockk<BankTransactionListModel>()
 
-        every { userStorageRepository.getUserId() } returns flowOf(Result.success(userId))
-        every { userCloudStorageRepository.getUserTransactions(userId) } returns flowOf(
-            Result.success(
-                transactionResponse
+            every { userStorageRepository.getUserId() } returns flowOf(Result.success(userId))
+            every { userCloudStorageRepository.getUserTransactions(userId) } returns flowOf(
+                Result.success(
+                    transactionResponse
+                )
             )
-        )
-        every { bankTransactionMapper.mapToBankTransactionListModel(transactionResponse) } returns mappedTransactionList
+            every {
+                bankTransactionMapper.mapToBankTransactionListModel(transactionResponse)
+            } returns mappedTransactionList
 
-        val result = getUserTransactionsUC().first()
+            val result = getUserTransactionsUC().first()
 
-        assertTrue(result.isSuccess)
-        assertEquals(mappedTransactionList, result.getOrNull())
+            assertTrue(result.isSuccess)
+            assertEquals(mappedTransactionList, result.getOrNull())
 
-        verify {
-            userStorageRepository.getUserId()
-            userCloudStorageRepository.getUserTransactions(userId)
-            bankTransactionMapper.mapToBankTransactionListModel(transactionResponse)
+            verify {
+                userStorageRepository.getUserId()
+                userCloudStorageRepository.getUserTransactions(userId)
+                bankTransactionMapper.mapToBankTransactionListModel(transactionResponse)
+            }
         }
-    }
 
     @Test
-    fun `invoke should return failure when userStorageRepository fails`() = runTest {
-        val exception = Exception("Failed to get user ID")
-        every { userStorageRepository.getUserId() } returns flowOf(Result.failure(exception))
+    fun `invoke should return failure when userStorageRepository fails`() =
+        runTest {
+            val exception = Exception("Failed to get user ID")
+            every { userStorageRepository.getUserId() } returns flowOf(Result.failure(exception))
 
-        val result = getUserTransactionsUC().first()
+            val result = getUserTransactionsUC().first()
 
-        Assert.assertTrue(result.isFailure)
-        Assert.assertEquals(exception, result.exceptionOrNull())
+            Assert.assertTrue(result.isFailure)
+            Assert.assertEquals(exception, result.exceptionOrNull())
 
-        verify {
-            userStorageRepository.getUserId()
+            verify {
+                userStorageRepository.getUserId()
+            }
         }
-    }
 
     @Test
-    fun `invoke should return failure when userCloudStorageRepository fails`() = runTest {
-        val userId = "testUserId"
-        val exception = Exception("Failed to get user transactions")
+    fun `invoke should return failure when userCloudStorageRepository fails`() =
+        runTest {
+            val userId = "testUserId"
+            val exception = Exception("Failed to get user transactions")
 
-        every { userStorageRepository.getUserId() } returns flowOf(Result.success(userId))
-        every { userCloudStorageRepository.getUserTransactions(userId) } returns flowOf(
-            Result.failure(
-                exception
+            every { userStorageRepository.getUserId() } returns flowOf(Result.success(userId))
+            every { userCloudStorageRepository.getUserTransactions(userId) } returns flowOf(
+                Result.failure(
+                    exception
+                )
             )
-        )
 
-        val result = getUserTransactionsUC().first()
+            val result = getUserTransactionsUC().first()
 
-        Assert.assertTrue(result.isFailure)
-        Assert.assertEquals(exception, result.exceptionOrNull())
+            Assert.assertTrue(result.isFailure)
+            Assert.assertEquals(exception, result.exceptionOrNull())
 
-        verify {
-            userStorageRepository.getUserId()
-            userCloudStorageRepository.getUserTransactions(userId)
+            verify {
+                userStorageRepository.getUserId()
+                userCloudStorageRepository.getUserTransactions(userId)
+            }
         }
-    }
 
     @After
     fun tearDown() {
