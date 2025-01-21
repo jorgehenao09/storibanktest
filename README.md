@@ -1,5 +1,5 @@
 # Stori Test
-Stori Test is a basic Android app where a user can authenticate or create an user and see their lastest movements in the bank. The newest changes will be on develop branch.
+Stori Test is a basic Android app where a user can authenticate or create an user and see their lastest movements in the bank. The newest changes you will find on develop branch.
 
 The google-services.json will be shared by email.
 
