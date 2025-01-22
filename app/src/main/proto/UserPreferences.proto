@@ -5,9 +5,9 @@ option java_multiple_files = true;
 
 message UserPreferencesProto {
   string customerId = 1;
-  string email = 3;
-  string firstName = 4;
-  string lastName = 5;
-  string faceId = 6;
-  bool userLogged = 7;
+  string email = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string faceId = 5;
+  bool userLogged = 6;
 }

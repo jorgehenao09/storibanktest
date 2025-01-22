@@ -49,7 +49,9 @@ class AuthenticationActivity : ComponentActivity() {
                                 launchHomeActivity()
                             }
 
-                            else -> {}
+                            else -> {
+                                keepSplashOpened = false
+                            }
                         }
                     }
                 }
