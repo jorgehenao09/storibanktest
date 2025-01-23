@@ -3,7 +3,7 @@ Stori Test is a basic Android app where a user can authenticate or create an use
 
 The google-services.json will be shared by email.
 
-To see a user with transactions please use the user: pepito@mail.com pass: 123456
+To see a user with transactions please use the user: joehenaoro@gmail.com pass: 123456
 
 ## Architecture
 
